@@ -1,0 +1,2 @@
+#!/bin/bash
+rsync -avzru marekkapolka.com:store/transcribe/art Assets/

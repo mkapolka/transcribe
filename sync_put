@@ -1,0 +1,4 @@
+#!/bin/bash
+rsync -avzru ./Assets/Sprites marekkapolka.com:store/transcribe/art
+rsync -avzru ./Assets/Fonts marekkapolka.com:store/transcribe/art
+rsync -avzru ./Assets/Concepts marekkapolka.com:store/transcribe/art
