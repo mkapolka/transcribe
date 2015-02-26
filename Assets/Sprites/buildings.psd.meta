@@ -1,0 +1,124 @@
+fileFormatVersion: 2
+guid: 37c25a00bc57d41a4a79867682b4ec80
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: city
+    21300002: buildings_7
+    21300004: walled_town
+    21300006: castle
+    21300008: mission
+    21300010: well_town
+    21300012: buildings_6
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: buildings_6
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 757
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: buildings_7
+      rect:
+        serializedVersion: 2
+        x: 710
+        y: 759
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: walled_town
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 717
+        width: 342
+        height: 250
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: castle
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 718
+        width: 344
+        height: 300
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mission
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 342
+        width: 266
+        height: 312
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: well_town
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 392
+        width: 317
+        height: 190
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: city
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 41
+        width: 408
+        height: 197
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+  spritePackingTag: 
+  userData: 

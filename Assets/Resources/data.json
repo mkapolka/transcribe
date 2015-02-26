@@ -1,0 +1,105 @@
+{
+    "known_stories": [
+        "class_warrior", "location_hanging_tree", "location_smidge_ridge"
+    ],
+    "stories": [
+        {
+            "id": "class_warrior",
+            "title": "Talos the Soldier",
+            "description": "Recounts how Talos the Soldier and the Avatar became fast friends."
+        },
+        {
+            "id": "class_merchant",
+            "title": "Friend of Merchants",
+            "description": "How the merchant guild helped the Avatar in his quest."
+        },
+        {
+            "id": "location_hanging_tree",
+            "title": "The Lost Ring",
+            "description": "In which the Avatar loses the holy ring near the Hanging Tree."
+        },
+        {
+            "id": "location_smidge_ridge",
+            "title": "The Holy Mountain",
+            "description": "Tells of the seven trials the Avatar faced in Smidge Ridge.",
+            "upon_hearing": "I want to climb Smidge Ridge and better understand the Avatar!"
+        },
+        {
+            "id": "action_destroy_book",
+            "title": "The Fearful Book",
+            "description": "How the Avatar destroyed an deceitful book and its treacherous author.",
+            "upon_hearing": "How fearsome! I will be vigilant to destroy any duplicitous books I find."
+        },
+        {
+            "id": "action_create_party",
+            "title": "Fellowship of the Avatar",
+            "description": "Recalls how the Avatar formed an adventuring party and ventured forth."
+        }
+    ],
+    "dialogs": [
+        {
+            "id": "inspire_soldier",
+            "texts": ["The bard's tales have inspired me! I want to be just like Talos the soldier!"]
+        },
+        {
+            "id": "go_to_hanging_tree",
+            "texts": ["I want to seek the holy ring in the fields of Hanging Tree!"]
+        },
+        {
+            "id": "go_to_smidge_ridge",
+            "texts": ["I will undertake the trials of Smidge Ridge just like the avatar!"]
+        },
+        {
+            "id": "bard_return",
+            "texts": ["Okay, I'll come back to the mission."]
+        },
+        {
+            "id": "no_bards",
+            "texts": ["I don't have any bards to send there."]
+        },
+        {
+            "id": "bard_already_at_town",
+            "texts": ["We already have a bard handling that location."]
+        }
+    ],
+    "people": [
+        {
+            "id": "warrior",
+            "name": "Chuck",
+            "portraitId": "warriorPortrait",
+            "type": "Soldier"
+        },
+        {
+            "id": "bard1",
+            "name": "Moe",
+            "portraitId": "warriorPortrait",
+            "type": "Bard"
+        },
+        {
+            "id": "bard2",
+            "name": "Larry",
+            "portraitId": "warriorPortrait",
+            "type": "Bard"
+        },
+        {
+            "id": "bard3",
+            "name": "Curly",
+            "portraitId": "warriorPortrait",
+            "type": "Bard"
+        }
+    ],
+    "towns": [
+        {
+            "id": "hanging_tree",
+            "name": "Hanging Tree"
+        },
+        {
+            "id": "smidge_ridge",
+            "name": "Smidge Ridge"
+        },
+        {
+            "id": "mission",
+            "name": "The Mission"
+        }
+    ]
+}

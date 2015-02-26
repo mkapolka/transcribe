@@ -1,0 +1,11 @@
+Assets/Sprites/*
+Assets/Fonts/*
+Assets/Concepts/*
+Library/*
+Temp/*
+Obj/*
+Builds/*
+!*.meta
+
+*.pidb.meta
+sysinfo.txt
