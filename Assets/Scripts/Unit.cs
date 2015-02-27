@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Unit : MonoBehaviour {
     // Units / second
     public static float MAX_SPEED = 1.0f;
+    public const float INTERACT_DISTANCE = 0.2f;
 
 	public enum Type {
         Bard, Soldier, Merchant, Wolf
@@ -172,11 +173,14 @@ public class Unit : MonoBehaviour {
         return null;
     }
 
-    void OnTriggerEnter2D(Collider2D other) {
+    void OnTriggerStay2D(Collider2D other) {
         Unit otherUnit = other.GetComponent<Unit>();
         if (otherUnit != null && otherUnit.type == Type.Bard && this.type != Type.Bard) {
-            foreach (Story story in otherUnit.heardStories) {
-                this.HearStory(story);
+            float distance = (this.transform.position - other.transform.position).magnitude;
+            if (distance < INTERACT_DISTANCE) {
+                foreach (Story story in otherUnit.heardStories) {
+                    this.HearStory(story);
+                }
             }
         }
     }

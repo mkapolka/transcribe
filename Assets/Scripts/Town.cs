@@ -44,7 +44,7 @@ public class Town : MonoBehaviour {
         tib.SetVisibility(false);
     }
 
-    public void OnMouseUp() {
+    public void MouseUp() {
         bool bardGoingToTown = false;
         Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
         foreach (Unit unit in units) {
