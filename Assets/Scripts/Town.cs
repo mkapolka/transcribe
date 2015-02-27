@@ -45,23 +45,24 @@ public class Town : MonoBehaviour {
     }
 
     public void MouseUp() {
-        bool bardGoingToTown = false;
-        Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
-        foreach (Unit unit in units) {
-            if (unit.type == Unit.Type.Bard && unit.targetTown == this) {
-                bardGoingToTown = true;
+        if (this.townId != "mission") {
+            bool bardGoingToTown = false;
+            Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
+            foreach (Unit unit in units) {
+                if (unit.type == Unit.Type.Bard && unit.targetTown == this) {
+                    bardGoingToTown = true;
+                }
+            }
+
+            if (GameState.availableBards.Count <= 0) {
+                GameState.ShowDialog("no_bards");
+            } else if (bardGoingToTown) {
+                GameState.ShowDialog("bard_already_at_town");
+            } else {
+                GameState.targetTown = GameState.GetTownState(this.townId);
+                GameState.LoadScene("Writing");
             }
         }
-
-        if (GameState.availableBards.Count <= 0) {
-            GameState.ShowDialog("no_bards");
-        } else if (bardGoingToTown) {
-            GameState.ShowDialog("bard_already_at_town");
-        } else {
-            GameState.targetTown = GameState.GetTownState(this.townId);
-            GameState.LoadScene("Writing");
-        }
-        //Application.LoadLevel("Writing");
     }
 
     void Update() {

@@ -6,6 +6,7 @@ public class Unit : MonoBehaviour {
     // Units / second
     public static float MAX_SPEED = 1.0f;
     public const float INTERACT_DISTANCE = 0.2f;
+    public const float CAMERA_PAN_SPEED = 10.0f;
 
 	public enum Type {
         Bard, Soldier, Merchant, Wolf
@@ -118,14 +119,19 @@ public class Unit : MonoBehaviour {
         // Some stories can happen as many times as we want
         switch (story.id) {
             case "location_hanging_tree":
-                this.SetTargetTown("hanging_tree");
-                this.ShowDialog("go_to_hanging_tree");
+                this.HearTownStory("hanging_tree");
             break;
 
             case "location_smidge_ridge":
-                this.SetTargetTown("smidge_ridge");
-                this.ShowDialog("go_to_smidge_ridge");
+                this.HearTownStory("smidge_ridge");
             break;
+        }
+    }
+
+    private void HearTownStory(string townId) {
+        if (this.targetTown == null || this.targetTown.townId != townId) {
+            this.SetTargetTown(townId);
+            this.ShowDialog("go_to_" + townId);
         }
     }
 
@@ -160,7 +166,12 @@ public class Unit : MonoBehaviour {
     }
 
     public void ShowDialog(string dialogId) {
-        this.dialogBubble.SetDialogId(dialogId);
+        if (GameState.HasSeenDialog(dialogId)) {
+            this.dialogBubble.SetDialogId(dialogId);
+        } else {
+            GameState.SeeDialog(dialogId);
+            Camera.main.GetComponent<CameraFocuser>().EnqueueEvent(this.transform, dialogId);
+        }
     }
 
     public Sprite GetSprite(Type type) {

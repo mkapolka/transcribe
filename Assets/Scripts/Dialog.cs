@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -14,6 +15,7 @@ public class Dialog : MonoBehaviour {
     private float forceStay;
 
     private List<string> dialogQueue;
+    public UnityEvent onComplete;
 
     public void Start() {
         Dialog.instance = this;
@@ -42,6 +44,7 @@ public class Dialog : MonoBehaviour {
                 this.PopDialog();
             } else {
                 this.SetVisible(false);
+                this.onComplete.Invoke();
             }
         }
     }
@@ -49,6 +52,7 @@ public class Dialog : MonoBehaviour {
     public void SetVisible(bool isVisible) {
         this.GetComponent<CanvasGroup>().alpha = isVisible ? 1 : 0;
         this.GetComponent<CanvasGroup>().interactable = isVisible;
+        this.GetComponent<CanvasGroup>().blocksRaycasts = isVisible;
     }
 
     public void Update() {
