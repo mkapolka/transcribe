@@ -29,21 +29,6 @@ public class Town : MonoBehaviour {
         this.book = townState.book;
     }
 
-    private TownInfoBox FindTownInfoBox() {
-        return GameObject.FindObjectOfType(typeof(TownInfoBox)) as TownInfoBox;
-    }
-
-    public void OnMouseEnter() {
-        TownInfoBox tib = this.FindTownInfoBox();
-        tib.SetTown(this);
-        tib.SetVisibility(true);
-    }
-
-    public void OnMouseExit() {
-        TownInfoBox tib = this.FindTownInfoBox();
-        tib.SetVisibility(false);
-    }
-
     public void MouseUp() {
         if (this.townId != "mission") {
             bool bardGoingToTown = false;

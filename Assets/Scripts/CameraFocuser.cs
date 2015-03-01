@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CameraFocuser : MonoBehaviour {
-    public const float CAMERA_PAN_SPEED = 50.0f;
+    public const float CAMERA_PAN_SPEED = 25.0f;
 
     public class CameraEvent {
         public Transform target;

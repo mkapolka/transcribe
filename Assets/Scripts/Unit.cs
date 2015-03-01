@@ -29,14 +29,28 @@ public class Unit : MonoBehaviour {
     private GameState.PersonState state;
     public List<Story> heardStories = new List<Story>();
 
+    // Move them a little off the center of the town for sprite overlapping purposes
+    private Vector3 townOffset;
+
     private bool isKilled = false;
 
     public void Start() {
+        this.townOffset = Random.onUnitSphere;
+        this.townOffset.z = 0;
+
         if (this.state == null) {
             this.state = new GameState.PersonState();
             this.state.id = Random.Range(0, int.MaxValue).ToString();
             this.currentTown = this.GetNearestTown();
         }
+    }
+
+    public string GetName() {
+        return this.state.name;
+    }
+    
+    public string GetTitle() {
+        return this.state.title;
     }
 
     private Town GetNearestTown() {
@@ -72,37 +86,46 @@ public class Unit : MonoBehaviour {
     }
 
     public void Update() {
-        if (this.targetTown != null) {
-            if (this.IsAtTown(this.nextTown)) {
-                this.currentTown = this.nextTown;
-                this.ArriveAtTown(this.currentTown);
-            }
+        if (!Dialog.InDialog()) {
+            if (this.targetTown != null) {
+                if (this.nextTown != this.targetTown && this.IsAtTown(this.nextTown)) {
+                    this.nextTown = this.nextTown.GetNextTown(this.targetTown);
+                } else {
+                    this.MoveTowardsTown(this.nextTown);
+                }
 
-            if (this.nextTown != this.targetTown && this.IsAtTown(this.nextTown)) {
-                this.nextTown = this.nextTown.GetNextTown(this.targetTown);
-            } else {
-                this.MoveTowardsTown(this.nextTown);
+                if (this.IsAtTown(this.targetTown)) {
+                    this.currentTown = this.nextTown;
+                    this.ArriveAtTown(this.currentTown);
+                    this.targetTown = null;
+                    this.nextTown = null;
+                }
             }
         }
     }
 
     public void ArriveAtTown(Town town) {
-        if (town.book != null) {
-            foreach (Story story in town.book.stories) {
-                this.HearStory(story);
-            }
-        }
-
         if (this.type == Type.Bard && town == this.targetTown) {
             if (town.townId == "mission") {
-                this.Kill();
-                GameState.RemovePerson(this.state);
-                GameState.availableBards.Add(this.state.id);
+                StartCoroutine("FadeOut");
                 print("Available bards: " + string.Join(", ", GameState.availableBards.ToArray()));
             } else {
                 town.ProcessStories(this.heardStories.ToArray());
             }
         }
+    }
+
+    IEnumerator FadeOut() {
+        SpriteRenderer renderer = this.GetComponentInChildren<SpriteRenderer>();
+        while (renderer.material.color.a > 0) {
+            Color color = renderer.material.color;
+            color.a -= Time.deltaTime;
+            renderer.material.color = color;
+            yield return null;
+        }
+        GameState.RemovePerson(this.state);
+        GameState.availableBards.Add(this.state.id);
+        this.Kill();
     }
 
     public void HearStory(Story story) {
@@ -158,7 +181,7 @@ public class Unit : MonoBehaviour {
     }
 
     public void MoveTowardsTown(Town town) {
-        Vector3 delta = town.transform.position - this.transform.position;
+        Vector3 delta = (town.transform.position + this.townOffset * 0.01f) - this.transform.position;
         if (delta.magnitude > Time.deltaTime * Unit.MAX_SPEED) {
             delta = delta.normalized * Time.deltaTime * Unit.MAX_SPEED;
         }
@@ -196,7 +219,7 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    void OnMouseUp() {
+    public void MouseUp() {
         if (this.type == Type.Bard) {
             this.SetTargetTown(Town.GetTown("mission"));
             this.ShowDialog("bard_return");
@@ -244,6 +267,21 @@ public class Unit : MonoBehaviour {
             this.currentTown = this.GetNearestTown();
         }
 
-        this.GetComponent<SpriteRenderer>().sprite = this.GetSprite(this.type);
+        this.GetComponentInChildren<SpriteRenderer>().sprite = this.GetSprite(this.type);
+    }
+
+    private PersonInfoBox FindPersonInfoBox() {
+        return GameObject.FindObjectOfType(typeof(PersonInfoBox)) as PersonInfoBox;
+    }
+
+    public void MouseEnter() {
+        PersonInfoBox tib = this.FindPersonInfoBox();
+        tib.SetPerson(this);
+        tib.SetVisibility(true);
+    }
+
+    public void MouseExit() {
+        PersonInfoBox tib = this.FindPersonInfoBox();
+        tib.SetVisibility(false);
     }
 }

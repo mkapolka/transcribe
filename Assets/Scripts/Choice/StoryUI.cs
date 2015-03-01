@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class StoryUI : MonoBehaviour {
+    public const int MAX_STORIES = 3;
 
     public StoryButton buttonPrefab;
     public Transform buttonParent;
     public GameObject nextButton;
     public GameObject speechBubble;
+    public Text counterText;
 
 	// Use this for initialization
 	void Start () {
@@ -24,6 +27,10 @@ public class StoryUI : MonoBehaviour {
         this.speechBubble.SetActive(false);
     }
 
+    void Update() {
+        this.UpdateCounter();
+    }
+
     private Story[] GetSelectedStories() {
         StoryButton[] buttons = GameObject.FindObjectsOfType(typeof(StoryButton)) as StoryButton[];
         List<Story> stories = new List<Story>();
@@ -33,6 +40,12 @@ public class StoryUI : MonoBehaviour {
             }
         }
         return stories.ToArray();
+    }
+
+    public void UpdateCounter() {
+        int stories = this.GetSelectedStories().Length;
+        this.counterText.text = "Stoires: " + stories + "/" + MAX_STORIES;
+        this.nextButton.SetActive(stories > 0);
     }
 
     public void NextButtonPressed() {
@@ -47,6 +60,10 @@ public class StoryUI : MonoBehaviour {
             GameState.StorePerson(bard);
             print("Bards remaining: " + string.Join(", ", GameState.availableBards.ToArray()));
         }
+        Application.LoadLevel("Map");
+    }
+    
+    public void BackButtonPressed() {
         Application.LoadLevel("Map");
     }
 }

@@ -83,6 +83,7 @@ public class GameState : MonoBehaviour {
             PersonTemplate template = new PersonTemplate();
             template.id = templateJson["id"].str;
             template.name = templateJson["name"].str;
+            template.title = templateJson["title"].str;
             template.portraitId = templateJson["portraitId"].str;
             template.type = (Unit.Type) Unit.Type.Parse(typeof(Unit.Type), templateJson["type"].str);
             people.Add(template);
@@ -212,6 +213,7 @@ public class GameState : MonoBehaviour {
         state.id = (id == null) ? Random.Range(0, int.MaxValue).ToString() : id;
         state.type = template.type;
         state.name = template.name;
+        state.title = template.title;
         return state;
     }
 
@@ -233,6 +235,7 @@ public class GameState : MonoBehaviour {
 
     public class PersonState {
         public string id;
+        public string title;
         public string name;
         public Unit.Type type;
 
@@ -248,6 +251,7 @@ public class GameState : MonoBehaviour {
     public class PersonTemplate {
         public string id;
         public string name;
+        public string title;
         public string spriteId;
         public string portraitId;
         public Unit.Type type;

@@ -59,31 +59,35 @@
         },
         {
             "id": "bard_already_at_town",
-            "texts": ["We already have a bard handling that location."]
+            "texts": ["I've already sent someone there. I should call him back before I send someone else."]
         }
     ],
     "people": [
         {
             "id": "warrior",
             "name": "Chuck",
+            "title": "the warrior",
             "portraitId": "warriorPortrait",
             "type": "Soldier"
         },
         {
             "id": "bard1",
             "name": "Moe",
+            "title": "the bard",
             "portraitId": "warriorPortrait",
             "type": "Bard"
         },
         {
             "id": "bard2",
             "name": "Larry",
+            "title": "the bard",
             "portraitId": "warriorPortrait",
             "type": "Bard"
         },
         {
             "id": "bard3",
             "name": "Curly",
+            "title": "the bard",
             "portraitId": "warriorPortrait",
             "type": "Bard"
         }

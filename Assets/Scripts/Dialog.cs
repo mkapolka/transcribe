@@ -16,6 +16,11 @@ public class Dialog : MonoBehaviour {
 
     private List<string> dialogQueue;
     public UnityEvent onComplete;
+    private bool visible = false;
+
+    public static bool InDialog() {
+        return Dialog.instance.visible;
+    }
 
     public void Start() {
         Dialog.instance = this;
@@ -50,6 +55,7 @@ public class Dialog : MonoBehaviour {
     }
 
     public void SetVisible(bool isVisible) {
+        this.visible = isVisible;
         this.GetComponent<CanvasGroup>().alpha = isVisible ? 1 : 0;
         this.GetComponent<CanvasGroup>().interactable = isVisible;
         this.GetComponent<CanvasGroup>().blocksRaycasts = isVisible;

@@ -2,9 +2,10 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class TownInfoBox : MonoBehaviour {
+public class PersonInfoBox : MonoBehaviour {
 
-	public Text townName;
+	public Text personName;
+    public Text personTitle;
     public Text[] storyNames;
     public RectTransform bounds;
 
@@ -12,9 +13,10 @@ public class TownInfoBox : MonoBehaviour {
         this.SetVisibility(false);
     }
 
-    public void SetTown(Town town) {
-        this.townName.text = town.townName;
-        this.UpdateStoryTexts(town.book);
+    public void SetPerson(Unit unit) {
+        this.personName.text = unit.GetName();
+        this.personTitle.text = unit.GetTitle();
+        this.UpdateStoryTexts(unit);
     }
 
     public void SetVisibility(bool visible) {
@@ -27,14 +29,16 @@ public class TownInfoBox : MonoBehaviour {
         this.SetPosition(mousePosition);
     }
 
-    private void UpdateStoryTexts(Book book) {
+    private void UpdateStoryTexts(Unit unit) {
         foreach (Text text in this.storyNames) {
             text.text = "";
         }
         int i = 0;
-        foreach (Story story in book.stories) {
-            this.storyNames[i].text = story.title;
-            i++;
+        foreach (Story story in unit.heardStories) {
+            if (this.storyNames.Length > i) {
+                this.storyNames[i].text = story.title;
+                i++;
+            }
         }
     }
 
