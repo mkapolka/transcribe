@@ -214,6 +214,7 @@ public class GameState : MonoBehaviour {
         state.type = template.type;
         state.name = template.name;
         state.title = template.title;
+        state.portraitId = template.portraitId;
         return state;
     }
 
@@ -237,6 +238,7 @@ public class GameState : MonoBehaviour {
         public string id;
         public string title;
         public string name;
+        public string portraitId;
         public Unit.Type type;
 
         public Vector3 position;

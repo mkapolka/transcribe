@@ -39,15 +39,15 @@
     "dialogs": [
         {
             "id": "inspire_soldier",
-            "texts": ["The bard's tales have inspired me! I want to be just like Talos the soldier!"]
+            "texts": ["[spoken]The bard's tales have inspired me! I want to be just like Talos the soldier!"]
         },
         {
             "id": "go_to_hanging_tree",
-            "texts": ["I want to seek the holy ring in the fields of Hanging Tree!"]
+            "texts": ["[spoken]I want to seek the holy ring in the fields of Hanging Tree!"]
         },
         {
             "id": "go_to_smidge_ridge",
-            "texts": ["I will undertake the trials of Smidge Ridge just like the avatar!"]
+            "texts": ["[spoken]I will undertake the trials of Smidge Ridge just like the avatar!"]
         },
         {
             "id": "bard_return",
@@ -55,11 +55,11 @@
         },
         {
             "id": "no_bards",
-            "texts": ["I don't have any bards to send there."]
+            "texts": ["[portrait boss]I don't have any bards to send there."]
         },
         {
             "id": "bard_already_at_town",
-            "texts": ["I've already sent someone to {townName}. I should call him back before I send someone else."]
+            "texts": ["[portrait boss]I've already sent someone to {townName}. I should call him back before I send someone else."]
         }
     ],
     "people": [
@@ -67,28 +67,28 @@
             "id": "warrior",
             "name": "Chuck the Soldier",
             "title": "is exploring Smidge Ridge",
-            "portraitId": "warriorPortrait",
+            "portraitId": "warrior",
             "type": "Soldier"
         },
         {
             "id": "bard1",
             "name": "Moe",
             "title": "the bard",
-            "portraitId": "warriorPortrait",
+            "portraitId": "bard",
             "type": "Bard"
         },
         {
             "id": "bard2",
             "name": "Larry",
             "title": "the bard",
-            "portraitId": "warriorPortrait",
+            "portraitId": "bard",
             "type": "Bard"
         },
         {
             "id": "bard3",
             "name": "Curly",
             "title": "the bard",
-            "portraitId": "warriorPortrait",
+            "portraitId": "bard",
             "type": "Bard"
         }
     ],

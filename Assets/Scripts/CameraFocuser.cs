@@ -8,6 +8,7 @@ public class CameraFocuser : MonoBehaviour {
     public class CameraEvent {
         public Transform target;
         public string dialogId;
+        public Dictionary<string, string> dialogParameters;
     }
 
     private Queue<CameraEvent> eventQueue = new Queue<CameraEvent>();
@@ -17,16 +18,17 @@ public class CameraFocuser : MonoBehaviour {
         if (this.eventQueue.Count > 0) {
             this.currentEvent = this.eventQueue.Dequeue();
             StartCoroutine("CenterCamera");
-            GameState.ShowDialog(this.currentEvent.dialogId);
+            GameState.ShowDialog(this.currentEvent.dialogId, this.currentEvent.dialogParameters);
         } else {
             this.currentEvent = null;
         }
     }
 
-    public void EnqueueEvent(Transform target, string dialogId) {
+    public void EnqueueEvent(Transform target, string dialogId, Dictionary<string, string> dialogParameters) {
         CameraEvent e = new CameraEvent();
         e.target = target;
         e.dialogId = dialogId;
+        e.dialogParameters = dialogParameters;
         this.EnqueueEvent(e);
     }
 

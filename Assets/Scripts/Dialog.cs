@@ -110,7 +110,11 @@ public class Dialog : MonoBehaviour {
         string[] command = commandString.Split(' ');
         switch (command[0]) {
             case "portrait":
-                this.leftPortrait.sprite = this.GetSprite(command[1]);
+                this.SetSprite(command[1]);
+            break;
+
+            case "spoken":
+                this.SetSprite(this.dialog.parameters["speakerPortrait"]);
             break;
         }
     }
@@ -133,6 +137,11 @@ public class Dialog : MonoBehaviour {
             }
         }
         throw new System.Exception("Can't find sprite with key " + key);
+    }
+
+    private void SetSprite(string spriteKey) {
+        this.leftPortrait.sprite = this.GetSprite(spriteKey);
+        this.leftPortrait.color = this.leftPortrait.sprite == null ? Color.clear : Color.white;
     }
 
     public void SetVisible(bool isVisible) {

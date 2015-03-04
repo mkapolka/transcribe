@@ -4,6 +4,8 @@ TextureImporter:
   fileIDToRecycleName:
     21300000: warrior_portrait
     21300002: bard_portrait
+    21300004: soldier_portrait
+    21300006: boss_portrait
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,7 +47,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: warrior_portrait
+    - name: soldier_portrait
       rect:
         serializedVersion: 2
         x: 52
@@ -61,7 +63,17 @@ TextureImporter:
         x: 694
         y: 0
         width: 432
-        height: 991
+        height: 1000
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: boss_portrait
+      rect:
+        serializedVersion: 2
+        x: 1205
+        y: 0
+        width: 560
+        height: 1000
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

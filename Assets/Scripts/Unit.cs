@@ -189,12 +189,20 @@ public class Unit : MonoBehaviour {
         this.transform.position += delta;
     }
 
+    private Dictionary<string, string> GetDialogParameters() {
+        return new Dictionary<string, string>() {
+            {"speaker", this.state.id},
+            {"speakerName", this.state.name},
+            {"speakerPortrait", this.state.portraitId}
+        };
+    }
+
     public void ShowDialog(string dialogId) {
         if (GameState.HasSeenDialog(dialogId)) {
             this.dialogBubble.SetDialogId(dialogId);
         } else {
             GameState.SeeDialog(dialogId);
-            Camera.main.GetComponent<CameraFocuser>().EnqueueEvent(this.transform, dialogId);
+            Camera.main.GetComponent<CameraFocuser>().EnqueueEvent(this.transform, dialogId, this.GetDialogParameters());
         }
     }
 
