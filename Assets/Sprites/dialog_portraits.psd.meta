@@ -2,7 +2,8 @@ fileFormatVersion: 2
 guid: 81cd8378734bf4070bf6dbff6e14cb0c
 TextureImporter:
   fileIDToRecycleName:
-    21300000: dialog_portraits_0
+    21300000: warrior_portrait
+    21300002: bard_portrait
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -44,7 +45,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: dialog_portraits_0
+    - name: warrior_portrait
       rect:
         serializedVersion: 2
         x: 52
@@ -52,7 +53,17 @@ TextureImporter:
         width: 500
         height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: bard_portrait
+      rect:
+        serializedVersion: 2
+        x: 694
+        y: 0
+        width: 432
+        height: 991
+      alignment: 0
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

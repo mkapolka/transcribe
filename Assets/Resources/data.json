@@ -51,7 +51,7 @@
         },
         {
             "id": "bard_return",
-            "texts": ["Okay, I'll come back to the mission."]
+            "texts": ["[portrait bard]Okay, I'll come back to the mission."]
         },
         {
             "id": "no_bards",
@@ -59,14 +59,14 @@
         },
         {
             "id": "bard_already_at_town",
-            "texts": ["I've already sent someone there. I should call him back before I send someone else."]
+            "texts": ["I've already sent someone to {townName}. I should call him back before I send someone else."]
         }
     ],
     "people": [
         {
             "id": "warrior",
-            "name": "Chuck",
-            "title": "the warrior",
+            "name": "Chuck the Soldier",
+            "title": "is exploring Smidge Ridge",
             "portraitId": "warriorPortrait",
             "type": "Soldier"
         },

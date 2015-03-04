@@ -29,6 +29,12 @@ public class Town : MonoBehaviour {
         this.book = townState.book;
     }
 
+    private Dictionary<string, string> GetDialogParameters() {
+        return new Dictionary<string, string>() {
+            {"townName", this.townName}
+        };
+    }
+
     public void MouseUp() {
         if (this.townId != "mission") {
             bool bardGoingToTown = false;
@@ -40,9 +46,9 @@ public class Town : MonoBehaviour {
             }
 
             if (GameState.availableBards.Count <= 0) {
-                GameState.ShowDialog("no_bards");
+                GameState.ShowDialog("no_bards", this.GetDialogParameters());
             } else if (bardGoingToTown) {
-                GameState.ShowDialog("bard_already_at_town");
+                GameState.ShowDialog("bard_already_at_town", this.GetDialogParameters());
             } else {
                 GameState.targetTown = GameState.GetTownState(this.townId);
                 GameState.LoadScene("Writing");

@@ -10,7 +10,7 @@ public class CameraDrag : MonoBehaviour {
     }
 
 	void Update () {
-	    if (Input.GetButton("Fire1")) {
+	    if (Input.GetButton("Fire1") && !Dialog.InDialog()) {
             Camera camera = this.GetComponent<Camera>();
             Vector3 newPosition = this.transform.position + (camera.ScreenToWorldPoint(this.lastPosition) - camera.ScreenToWorldPoint(Input.mousePosition));
 

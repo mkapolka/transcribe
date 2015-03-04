@@ -6,6 +6,8 @@ TextureImporter:
     21300002: soldier
     21300004: merchant
     21300006: wolf
+    21300008: warrior
+    21300010: bard
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -41,49 +43,29 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: .5, y: .5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 200
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: book
+    - name: warrior
       rect:
         serializedVersion: 2
-        x: 49
-        y: 545
-        width: 152
-        height: 200
+        x: 42
+        y: 559
+        width: 225
+        height: 393
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: soldier
+    - name: bard
       rect:
         serializedVersion: 2
-        x: 55
-        y: 798
-        width: 221
-        height: 175
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: merchant
-      rect:
-        serializedVersion: 2
-        x: 287
-        y: 742
-        width: 261
-        height: 237
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: wolf
-      rect:
-        serializedVersion: 2
-        x: 624
-        y: 821
-        width: 267
-        height: 101
+        x: 337
+        y: 543
+        width: 306
+        height: 436
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

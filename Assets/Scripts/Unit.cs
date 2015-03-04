@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour {
     public static float MAX_SPEED = 1.0f;
     public const float INTERACT_DISTANCE = 0.2f;
     public const float CAMERA_PAN_SPEED = 10.0f;
+    public const float FADE_SPEED = 2.0f;
 
 	public enum Type {
         Bard, Soldier, Merchant, Wolf
@@ -119,7 +120,7 @@ public class Unit : MonoBehaviour {
         SpriteRenderer renderer = this.GetComponentInChildren<SpriteRenderer>();
         while (renderer.material.color.a > 0) {
             Color color = renderer.material.color;
-            color.a -= Time.deltaTime;
+            color.a -= Time.deltaTime * FADE_SPEED;
             renderer.material.color = color;
             yield return null;
         }
@@ -275,9 +276,11 @@ public class Unit : MonoBehaviour {
     }
 
     public void MouseEnter() {
-        PersonInfoBox tib = this.FindPersonInfoBox();
-        tib.SetPerson(this);
-        tib.SetVisibility(true);
+        if (!Dialog.InDialog()) {
+            PersonInfoBox tib = this.FindPersonInfoBox();
+            tib.SetPerson(this);
+            tib.SetVisibility(true);
+        }
     }
 
     public void MouseExit() {

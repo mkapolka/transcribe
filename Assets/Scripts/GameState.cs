@@ -119,9 +119,9 @@ public class GameState : MonoBehaviour {
         throw new System.Exception("Couldn't find DialogTemplate with dialogId " + dialogId);
     }
 
-    public static void ShowDialog(string dialogId) {
+    public static void ShowDialog(string dialogId, Dictionary<string, string> parameters = null) {
         DialogTemplate template = GameState.GetDialogTemplate(dialogId);
-        Dialog.instance.ShowDialog(template.lines);
+        Dialog.instance.ShowDialog(template.lines, parameters);
     }
 
     public static TownState GetTownState(string townId) {
