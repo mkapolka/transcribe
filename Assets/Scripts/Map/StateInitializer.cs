@@ -22,15 +22,7 @@ public class StateInitializer : MonoBehaviour {
 	    // Initialize people
         foreach (GameState.PersonState state in GameState.personStates) {
             print("Loading " + state.id);
-            Vector3 position;
-            if (state.placeAtTown != null) {
-                position = Town.GetTown(state.placeAtTown).transform.position;
-                state.placeAtTown = null;
-            } else {
-                position = state.position;
-            }
-
-            Unit unit = (GameObject.Instantiate(this.unitPrefab, position, Quaternion.identity) as GameObject).GetComponent<Unit>();
+            Unit unit = (GameObject.Instantiate(this.unitPrefab, state.GetPosition(), Quaternion.identity) as GameObject).GetComponent<Unit>();
             unit.LoadState(state);
             units.Add(unit);
         }

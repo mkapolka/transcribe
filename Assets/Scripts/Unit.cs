@@ -301,7 +301,16 @@ public class Unit : MonoBehaviour {
 
     public void LoadState(GameState.PersonState state) {
         this.state = state;
-        // this.transform.position = state.position;
+        Vector3 position;
+        if (state.placeAtTown != null) {
+            print("Placing at town: " + state.placeAtTown);
+            position = Town.GetTown(state.placeAtTown).transform.position;
+            state.placeAtTown = null;
+        } else {
+            position = state.position;
+        }
+        this.transform.position = position;
+
         this.id = state.id;
         this.type = state.type;
         this.heardStories = new List<Story>(this.state.heardStories);

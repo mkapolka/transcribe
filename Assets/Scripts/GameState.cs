@@ -20,9 +20,7 @@ public class GameState : MonoBehaviour {
     public static TownState targetTown;
 
     public void Start() {
-        if (!GameState.isInitialized) {
-            GameState.InitializeState();
-        }
+        GameState.InitializeState();
     }
 
     public static void LoadScene(string sceneName) {
@@ -34,16 +32,18 @@ public class GameState : MonoBehaviour {
     }
 
     public static void InitializeState() {
-        string jsonString = (Resources.Load("data") as TextAsset).text;
-        JSONObject dataJson = new JSONObject(jsonString);
-        GameState.InitializeTowns(dataJson);
-        GameState.InitializeStories(dataJson);
-        GameState.InitializeKnownStories(dataJson);
-        GameState.InitializePersonTemplates(dataJson);
-        GameState.InitializeDialogTemplates(dataJson);
-        GameState.InitializePeople(GameState.personTemplates);
+        if (!GameState.isInitialized) {
+            string jsonString = (Resources.Load("data") as TextAsset).text;
+            JSONObject dataJson = new JSONObject(jsonString);
+            GameState.InitializeTowns(dataJson);
+            GameState.InitializeStories(dataJson);
+            GameState.InitializeKnownStories(dataJson);
+            GameState.InitializePersonTemplates(dataJson);
+            GameState.InitializeDialogTemplates(dataJson);
+            GameState.InitializePeople(GameState.personTemplates);
 
-        GameState.isInitialized = true;
+            GameState.isInitialized = true;
+        }
     }
 
     public static void InitializeTowns(JSONObject data) {
@@ -281,6 +281,14 @@ public class GameState : MonoBehaviour {
         public string placeAtTown;
 
         public Story[] heardStories = new Story[0];
+
+        public Vector3 GetPosition() {
+            if (this.placeAtTown != null) {
+                return Town.GetTown(this.placeAtTown).transform.position;
+            } else {
+                return this.position;
+            }
+        }
     }
 
     public class PersonTemplate {
