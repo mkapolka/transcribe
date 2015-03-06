@@ -6,6 +6,7 @@ TextureImporter:
     21300002: bard_portrait
     21300004: soldier_portrait
     21300006: boss_portrait
+    21300008: adventurer_portrait
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,7 +27,7 @@ TextureImporter:
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 1024
+  maxTextureSize: 2048
   textureSettings:
     filterMode: -1
     aniso: 16
@@ -51,7 +52,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 52
-        y: 0
+        y: 1048
         width: 500
         height: 1000
       alignment: 0
@@ -61,7 +62,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 694
-        y: 0
+        y: 1048
         width: 432
         height: 1000
       alignment: 0
@@ -70,10 +71,20 @@ TextureImporter:
     - name: boss_portrait
       rect:
         serializedVersion: 2
-        x: 1205
-        y: 0
+        x: 1222
+        y: 1048
         width: 560
         height: 1000
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: adventurer_portrait
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 0
+        width: 462
+        height: 979
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

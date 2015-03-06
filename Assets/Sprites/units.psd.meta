@@ -8,6 +8,7 @@ TextureImporter:
     21300006: wolf
     21300008: warrior
     21300010: bard
+    21300012: adventurer
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -66,6 +67,16 @@ TextureImporter:
         y: 543
         width: 306
         height: 436
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: adventurer
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 520
+        width: 238
+        height: 453
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

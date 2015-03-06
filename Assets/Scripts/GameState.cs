@@ -7,7 +7,7 @@ public class GameState : MonoBehaviour {
     public static bool isInitialized = false;
     public static TownState[] townStates;
     public static List<PersonState> personStates = new List<PersonState>();
-    public static Story[] knownStories;
+    public static List<Story> knownStories;
     public static Story[] allStories;
     public static PersonTemplate[] personTemplates;
     public static DialogTemplate[] dialogTemplates;
@@ -15,6 +15,7 @@ public class GameState : MonoBehaviour {
     public static List<string> availableBards = new List<string>(new string[]{"bard1", "bard2", "bard3"});
 
     public static bool hasSpawnedWarrior = false;
+    public static bool hasSpawnedAdventurer = false;
 
     public static TownState targetTown;
 
@@ -40,6 +41,7 @@ public class GameState : MonoBehaviour {
         GameState.InitializeKnownStories(dataJson);
         GameState.InitializePersonTemplates(dataJson);
         GameState.InitializeDialogTemplates(dataJson);
+        GameState.InitializePeople(GameState.personTemplates);
 
         GameState.isInitialized = true;
     }
@@ -74,7 +76,7 @@ public class GameState : MonoBehaviour {
             Story story = GameState.GetStory(obj.str);
             knownStories.Add(story);
         }
-        GameState.knownStories = knownStories.ToArray();
+        GameState.knownStories = knownStories;
     }
 
     public static void InitializePersonTemplates(JSONObject data) {
@@ -86,6 +88,9 @@ public class GameState : MonoBehaviour {
             template.title = templateJson["title"].str;
             template.portraitId = templateJson["portraitId"].str;
             template.type = (Unit.Type) Unit.Type.Parse(typeof(Unit.Type), templateJson["type"].str);
+            if (templateJson["initial_town"] != null) {
+                template.initialTown = templateJson["initial_town"].str;
+            }
             people.Add(template);
         }
         GameState.personTemplates = people.ToArray();
@@ -104,6 +109,17 @@ public class GameState : MonoBehaviour {
             dialogs.Add(template);
         }
         GameState.dialogTemplates = dialogs.ToArray();
+    }
+
+    public static void InitializePeople(PersonTemplate[] people) {
+        foreach (PersonTemplate template in people) {
+            if (template.initialTown != null && template.initialTown != "") {
+                PersonState person = GameState.InstantiatePersonFromTemplate(template, template.id);
+                person.placeAtTown = template.initialTown;
+                person.targetTown = template.initialTown;
+                GameState.StorePerson(person);
+            }
+        }
     }
 
     public static DialogTemplate GetDialogTemplate(string dialogId) {
@@ -158,7 +174,24 @@ public class GameState : MonoBehaviour {
         if (!GameState.isInitialized) {
             GameState.InitializeState();
         }
-        return GameState.knownStories;
+        return GameState.knownStories.ToArray();
+    }
+
+    public static void AddKnownStory(Story story) {
+        GameState.knownStories.Add(story);
+    }
+
+    public static bool KnowsStory(Story story) {
+        return GameState.KnowsStory(story.id);
+    }
+
+    public static bool KnowsStory(string storyId) {
+        foreach (Story story in GameState.knownStories) {
+            if (story.id == storyId) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static bool HasPerson(string personId) {
@@ -257,6 +290,7 @@ public class GameState : MonoBehaviour {
         public string spriteId;
         public string portraitId;
         public Unit.Type type;
+        public string initialTown;
     }
 
     public class DialogTemplate {

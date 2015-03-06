@@ -9,6 +9,9 @@ TextureImporter:
     21300008: mission
     21300010: well_town
     21300012: buildings_6
+    21300014: tree
+    21300016: mountain
+    21300018: door
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -50,26 +53,6 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: buildings_6
-      rect:
-        serializedVersion: 2
-        x: 675
-        y: 757
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-    - name: buildings_7
-      rect:
-        serializedVersion: 2
-        x: 710
-        y: 759
-        width: 8
-        height: 9
-      alignment: 0
-      pivot: {x: .5, y: .5}
-      border: {x: 0, y: 0, z: 0, w: 0}
     - name: walled_town
       rect:
         serializedVersion: 2
@@ -117,6 +100,36 @@ TextureImporter:
         y: 41
         width: 408
         height: 197
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: tree
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 89
+        width: 136
+        height: 285
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: mountain
+      rect:
+        serializedVersion: 2
+        x: 755
+        y: 82
+        width: 254
+        height: 293
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: door
+      rect:
+        serializedVersion: 2
+        x: 806
+        y: 489
+        width: 184
+        height: 171
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

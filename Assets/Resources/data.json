@@ -1,12 +1,12 @@
 {
     "known_stories": [
-        "class_warrior", "location_hanging_tree", "location_smidge_ridge"
+        "location_hanging_tree"
     ],
     "stories": [
         {
             "id": "class_warrior",
-            "title": "Talos the Soldier",
-            "description": "Recounts how Talos the Soldier and the Avatar became fast friends."
+            "title": "The Holy Mountain",
+            "description": "How the avatar met brave Talos while facing the trials of Smidge Ridge."
         },
         {
             "id": "class_merchant",
@@ -22,7 +22,16 @@
             "id": "location_smidge_ridge",
             "title": "The Holy Mountain",
             "description": "Tells of the seven trials the Avatar faced in Smidge Ridge.",
-            "upon_hearing": "I want to climb Smidge Ridge and better understand the Avatar!"
+        },
+        {
+            "id": "defend_gaffer",
+            "title": "The Battle of Gaffer's Junction",
+            "description": "How the Avatar defended the good people of Gaffer's Junction."
+        },
+        {
+            "id": "ring_oath",
+            "title": "Gilded Promise",
+            "description": "Recounts how the Fairy Queen swore an oath on the holy ring."
         },
         {
             "id": "action_destroy_book",
@@ -40,6 +49,10 @@
         {
             "id": "inspire_soldier",
             "texts": ["[spoken]The bard's tales have inspired me! I want to be just like Talos the soldier!"]
+        },
+        {
+            "id": "inspire_adventurer",
+            "texts": ["[spoken]I wonder if the Holy Ring is still in the fields near Hanging Tree..."]
         },
         {
             "id": "go_to_hanging_tree",
@@ -60,6 +73,22 @@
         {
             "id": "bard_already_at_town",
             "texts": ["[portrait boss]I've already sent someone to {townName}. I should call him back before I send someone else."]
+        },
+        {
+            "id": "learn_folk_song",
+            "texts": ["[spoken]I've learned a tale of the avatar from the people here!"]
+        },
+        {
+            "id": "dangerous_town",
+            "texts": ["[portrait boss]{townName} is too dangerous for me to send bards to right now."]
+        },
+        {
+            "id": "learn_from_unit",
+            "texts": [
+                "[portrait boss]Tell me what you know about the Avatar.",
+                "[portrait {speakerId}]Okay.",
+                "[portrait boss]You learn {storyName} from {speakerName}."
+            ]
         }
     ],
     "people": [
@@ -68,7 +97,17 @@
             "name": "Chuck the Soldier",
             "title": "is exploring Smidge Ridge",
             "portraitId": "warrior",
-            "type": "Soldier"
+            "type": "Soldier",
+            "initial_town": "smidge_ridge"
+        },
+        {
+            "id": "adventurer",
+            "name": "Beth the Treasure Hunter",
+            "title": "is seeking the Holy Ring",
+            "portraitId": "adventurer",
+            "type": "Adventurer",
+            "knows_stories": ["location_smidge_ridge"],
+            "initial_town": "gaffer"
         },
         {
             "id": "bard1",
@@ -100,6 +139,10 @@
         {
             "id": "smidge_ridge",
             "name": "Smidge Ridge"
+        },
+        {
+            "id": "gaffer",
+            "name": "Gaffer's Juncture"
         },
         {
             "id": "mission",

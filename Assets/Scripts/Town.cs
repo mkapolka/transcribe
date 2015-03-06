@@ -8,6 +8,9 @@ public class Town : MonoBehaviour {
 	public Town[] connected;
     public Book book;
     public GameObject unitPrefab;
+    public string[] folkSongs;
+    public bool canSendBards;
+    public bool isDangerous;
 
     public static Town GetTown(string townId) {
         Town[] towns = GameObject.FindObjectsOfType(typeof(Town)) as Town[];
@@ -19,9 +22,7 @@ public class Town : MonoBehaviour {
         return null;
     }
 
-    public void Start() {
-        // this.InitializeState();
-    }
+    public void Start() {}
 
     public void InitializeState() {
         GameState.TownState townState = GameState.GetTownState(this.townId);
@@ -36,7 +37,9 @@ public class Town : MonoBehaviour {
     }
 
     public void MouseUp() {
-        if (this.townId != "mission") {
+        if (this.isDangerous) {
+            GameState.ShowDialog("dangerous_town", this.GetDialogParameters());
+        } else if (this.canSendBards) {
             bool bardGoingToTown = false;
             Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
             foreach (Unit unit in units) {
@@ -70,13 +73,24 @@ public class Town : MonoBehaviour {
 
     public void ProcessStory(Story story) {
         switch (story.id) {
-            case "class_warrior":
+            //TODO Temporarily disabled, remove permanently?
+            /*case "class_warrior":
                 if (!GameState.hasSpawnedWarrior) {
                     GameState.hasSpawnedWarrior = true;
                     Unit warrior = this.SpawnPerson("warrior");
                     warrior.ShowDialog("inspire_soldier");
                 }
             break;
+            case "location_hanging_tree":
+                if (!GameState.hasSpawnedAdventurer) {
+                    GameState.hasSpawnedAdventurer = true;
+                    Unit adventurer = this.SpawnPerson("adventurer");
+                    adventurer.ShowDialog("inspire_adventurer");
+                    adventurer.SetTargetTown("hanging_tree");
+                    adventurer.HearStory(story);
+                    adventurer.LearnStory(GameState.GetStory("location_smidge_ridge"));
+                }
+            break;*/
         }
     }
 

@@ -10,7 +10,7 @@ public class Unit : MonoBehaviour {
     public const float FADE_SPEED = 2.0f;
 
 	public enum Type {
-        Bard, Soldier, Merchant, Wolf
+        Bard, Soldier, Merchant, Wolf, Adventurer
     }
 
     [System.Serializable]
@@ -90,6 +90,7 @@ public class Unit : MonoBehaviour {
         if (!Dialog.InDialog()) {
             if (this.targetTown != null) {
                 if (this.nextTown != this.targetTown && this.IsAtTown(this.nextTown)) {
+                    this.ArriveAtTown(this.nextTown);
                     this.nextTown = this.nextTown.GetNextTown(this.targetTown);
                 } else {
                     this.MoveTowardsTown(this.nextTown);
@@ -112,6 +113,32 @@ public class Unit : MonoBehaviour {
                 print("Available bards: " + string.Join(", ", GameState.availableBards.ToArray()));
             } else {
                 town.ProcessStories(this.heardStories.ToArray());
+                foreach (string storyId in town.folkSongs) {
+                    if (!GameState.KnowsStory(storyId)) {
+                        this.LearnStory(storyId);
+                        this.ShowDialog("learn_folk_song");
+                    }
+                }
+            }
+        }
+
+        if (this.type != Type.Bard && town.townId == "mission") {
+            bool learned = false;
+            List<Story> newStories = new List<Story>();
+            foreach (Story story in this.heardStories) {
+                if (!GameState.KnowsStory(story)) {
+                    learned = true;
+                    GameState.AddKnownStory(story);
+                    newStories.Add(story);
+                }
+            }
+            if (learned) {
+                Dictionary<string, string> parameters = new Dictionary<string, string>() {
+                    {"speakerId", this.state.id},
+                    {"speakerName", this.state.name},
+                    {"storyName", newStories[0].title}
+                };
+                GameState.ShowDialog("learn_from_unit", parameters);
             }
         }
     }
@@ -127,6 +154,16 @@ public class Unit : MonoBehaviour {
         GameState.RemovePerson(this.state);
         GameState.availableBards.Add(this.state.id);
         this.Kill();
+    }
+
+    public void LearnStory(string storyId) {
+        this.LearnStory(GameState.GetStory(storyId));
+    }
+
+    public void LearnStory(Story story) {
+        if (!this.heardStories.Contains(story)) {
+            this.heardStories.Add(story);
+        }
     }
 
     public void HearStory(Story story) {
@@ -147,6 +184,7 @@ public class Unit : MonoBehaviour {
             break;
 
             case "location_smidge_ridge":
+            case "class_warrior":
                 this.HearTownStory("smidge_ridge");
             break;
         }
@@ -159,7 +197,7 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    private void SetTargetTown(string townId) {
+    public void SetTargetTown(string townId) {
         Town[] towns = GameObject.FindObjectsOfType(typeof(Town)) as Town[];
         Town targetTown = null;
         foreach (Town town in towns) {
@@ -263,7 +301,7 @@ public class Unit : MonoBehaviour {
 
     public void LoadState(GameState.PersonState state) {
         this.state = state;
-        this.transform.position = state.position;
+        // this.transform.position = state.position;
         this.id = state.id;
         this.type = state.type;
         this.heardStories = new List<Story>(this.state.heardStories);
