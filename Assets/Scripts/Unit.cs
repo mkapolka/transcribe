@@ -4,13 +4,17 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour {
     // Units / second
-    public static float MAX_SPEED = 1.0f;
+    public static float MAX_SPEED = 5.0f;
     public const float INTERACT_DISTANCE = 0.2f;
     public const float CAMERA_PAN_SPEED = 10.0f;
     public const float FADE_SPEED = 2.0f;
 
 	public enum Type {
         Bard, Soldier, Merchant, Wolf, Adventurer
+    }
+
+    public enum Mode {
+        Default, SoldierDefend
     }
 
     [System.Serializable]
@@ -28,6 +32,7 @@ public class Unit : MonoBehaviour {
     public Town currentTown;
     public DialogBubble dialogBubble;
     private GameState.PersonState state;
+    private Mode mode;
     public List<Story> heardStories = new List<Story>();
 
     // Move them a little off the center of the town for sprite overlapping purposes
@@ -82,12 +87,21 @@ public class Unit : MonoBehaviour {
         return this.id;
     }
 
+    public void SetMode(Mode mode) {
+        this.mode = mode;
+    }
+
     public bool IsAtTown(Town town) {
         return (town.transform.position - this.transform.position).magnitude < .1f;
     }
 
     public void Update() {
         if (!Dialog.InDialog()) {
+            switch (this.mode) {
+                case Mode.SoldierDefend:
+                    this.UpdateSoldierDefend();
+                break;
+            }
             if (this.targetTown != null) {
                 if (this.nextTown != this.targetTown && this.IsAtTown(this.nextTown)) {
                     this.ArriveAtTown(this.nextTown);
@@ -102,6 +116,19 @@ public class Unit : MonoBehaviour {
                     this.targetTown = null;
                     this.nextTown = null;
                 }
+            }
+        }
+    }
+
+    private void UpdateSoldierDefend() {
+        if (this.targetTown == null) {
+            Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
+            if (goblins != null && !goblins.AreKilled() && goblins.targetTown != null) {
+                Town town = goblins.targetTown;
+                Dictionary<string, string> parameters = this.GetDialogParameters();
+                parameters.Add("townName", town.townName);
+                this.SetTargetTown(town);
+                this.ShowDialog("hunt_goblins", parameters);
             }
         }
     }
@@ -139,6 +166,16 @@ public class Unit : MonoBehaviour {
                     {"storyName", newStories[0].title}
                 };
                 GameState.ShowDialog("learn_from_unit", parameters);
+            }
+        }
+
+        //TODO refactor
+        if (this.mode == Mode.SoldierDefend) {
+            Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
+            print(goblins + " " + goblins.targetTown + " " + town);
+            if (goblins.targetTown == town) {
+                goblins.Kill();
+                this.ShowDialog("fight_goblins");
             }
         }
     }
@@ -188,6 +225,21 @@ public class Unit : MonoBehaviour {
                 this.HearTownStory("smidge_ridge");
             break;
         }
+
+        //Type specific hear stories (TODO refactor this)
+        switch (this.type) {
+            case Type.Soldier:
+                this.HearStorySoldier(story);
+            break;
+        }
+    }
+
+    private void HearStorySoldier(Story story) {
+        switch (story.id) {
+            case "defend_gaffer":
+                this.SetMode(Mode.SoldierDefend);
+            break;
+        }
     }
 
     private void HearTownStory(string townId) {
@@ -235,12 +287,16 @@ public class Unit : MonoBehaviour {
         };
     }
 
-    public void ShowDialog(string dialogId) {
+    public void ShowDialog(string dialogId, Dictionary<string, string> parameters = null) {
+        if (parameters == null) {
+            parameters = this.GetDialogParameters();
+        }
+
         if (GameState.HasSeenDialog(dialogId)) {
             this.dialogBubble.SetDialogId(dialogId);
         } else {
             GameState.SeeDialog(dialogId);
-            Camera.main.GetComponent<CameraFocuser>().EnqueueEvent(this.transform, dialogId, this.GetDialogParameters());
+            Camera.main.GetComponent<CameraFocuser>().EnqueueEvent(this.transform, dialogId, parameters);
         }
     }
 
@@ -285,6 +341,7 @@ public class Unit : MonoBehaviour {
         this.state.position = this.transform.position;
         this.state.type = this.type;
         this.state.heardStories = this.heardStories.ToArray();
+        this.state.mode = this.mode;
         print("Next Town: " + this.nextTown + " Target Town: " + this.targetTown);
         if (this.nextTown != null) {
             this.state.nextTown = this.nextTown.townId;
@@ -313,6 +370,7 @@ public class Unit : MonoBehaviour {
 
         this.id = state.id;
         this.type = state.type;
+        this.mode = state.mode;
         this.heardStories = new List<Story>(this.state.heardStories);
         if (this.state.nextTown != null) {
             this.nextTown = Town.GetTown(state.nextTown);

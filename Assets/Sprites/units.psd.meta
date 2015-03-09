@@ -9,6 +9,7 @@ TextureImporter:
     21300008: warrior
     21300010: bard
     21300012: adventurer
+    21300014: goblin
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -31,7 +32,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 1024
   textureSettings:
-    filterMode: -1
+    filterMode: 1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -77,6 +78,16 @@ TextureImporter:
         y: 520
         width: 238
         height: 453
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: goblin
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 143
+        width: 381
+        height: 347
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

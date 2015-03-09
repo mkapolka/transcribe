@@ -10,7 +10,10 @@ public class Town : MonoBehaviour {
     public GameObject unitPrefab;
     public string[] folkSongs;
     public bool canSendBards;
-    public bool isDangerous;
+
+    public bool innatelyDangerous;
+    [System.NonSerialized]
+    public bool hasGoblins;
 
     public static Town GetTown(string townId) {
         Town[] towns = GameObject.FindObjectsOfType(typeof(Town)) as Town[];
@@ -36,25 +39,31 @@ public class Town : MonoBehaviour {
         };
     }
 
-    public void MouseUp() {
-        if (this.isDangerous) {
-            GameState.ShowDialog("dangerous_town", this.GetDialogParameters());
-        } else if (this.canSendBards) {
-            bool bardGoingToTown = false;
-            Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
-            foreach (Unit unit in units) {
-                if (unit.type == Unit.Type.Bard && unit.targetTown == this) {
-                    bardGoingToTown = true;
-                }
-            }
+    public bool IsDangerous() {
+        return this.innatelyDangerous || this.hasGoblins;
+    }
 
-            if (GameState.availableBards.Count <= 0) {
-                GameState.ShowDialog("no_bards", this.GetDialogParameters());
-            } else if (bardGoingToTown) {
-                GameState.ShowDialog("bard_already_at_town", this.GetDialogParameters());
+    public void MouseUp() {
+        if (this.canSendBards) {
+            if (this.IsDangerous()) {
+                GameState.ShowDialog("dangerous_town", this.GetDialogParameters());
             } else {
-                GameState.targetTown = GameState.GetTownState(this.townId);
-                GameState.LoadScene("Writing");
+                bool bardGoingToTown = false;
+                Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
+                foreach (Unit unit in units) {
+                    if (unit.type == Unit.Type.Bard && unit.targetTown == this) {
+                        bardGoingToTown = true;
+                    }
+                }
+
+                if (GameState.availableBards.Count <= 0) {
+                    GameState.ShowDialog("no_bards", this.GetDialogParameters());
+                } else if (bardGoingToTown) {
+                    GameState.ShowDialog("bard_already_at_town", this.GetDialogParameters());
+                } else {
+                    GameState.targetTown = GameState.GetTownState(this.townId);
+                    GameState.LoadScene("Writing");
+                }
             }
         }
     }
@@ -72,9 +81,10 @@ public class Town : MonoBehaviour {
     }
 
     public void ProcessStory(Story story) {
+        //TODO Temporarily disabled, remove permanently?
+        /*
         switch (story.id) {
-            //TODO Temporarily disabled, remove permanently?
-            /*case "class_warrior":
+            case "class_warrior":
                 if (!GameState.hasSpawnedWarrior) {
                     GameState.hasSpawnedWarrior = true;
                     Unit warrior = this.SpawnPerson("warrior");
@@ -90,8 +100,8 @@ public class Town : MonoBehaviour {
                     adventurer.HearStory(story);
                     adventurer.LearnStory(GameState.GetStory("location_smidge_ridge"));
                 }
-            break;*/
-        }
+            break;
+        }*/
     }
 
     Unit SpawnPerson(string id) {

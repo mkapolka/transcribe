@@ -5,15 +5,18 @@ using System.Collections.Generic;
 public class GameState : MonoBehaviour {
 
     public static bool isInitialized = false;
-    public static TownState[] townStates;
-    public static List<PersonState> personStates = new List<PersonState>();
-    public static List<Story> knownStories;
+
     public static Story[] allStories;
     public static PersonTemplate[] personTemplates;
     public static DialogTemplate[] dialogTemplates;
+
+    public static TownState[] townStates;
+    public static List<PersonState> personStates = new List<PersonState>();
+    public static List<Story> knownStories;
     public static List<string> seenDialogIds = new List<string>();
     public static List<string> availableBards = new List<string>(new string[]{"bard1", "bard2", "bard3"});
-
+    public static string goblinTargetTown = null;
+    public static bool goblinsKilled = false;
     public static bool hasSpawnedWarrior = false;
     public static bool hasSpawnedAdventurer = false;
 
@@ -273,6 +276,7 @@ public class GameState : MonoBehaviour {
         public string name;
         public string portraitId;
         public Unit.Type type;
+        public Unit.Mode mode;
 
         public Vector3 position;
         public string targetTown;

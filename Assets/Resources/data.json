@@ -1,6 +1,6 @@
 {
     "known_stories": [
-        "location_hanging_tree"
+        "location_hanging_tree", "defend_gaffer"
     ],
     "stories": [
         {
@@ -51,6 +51,10 @@
             "texts": ["[spoken]The bard's tales have inspired me! I want to be just like Talos the soldier!"]
         },
         {
+            "id": "inspire_defend",
+            "texts": ["[spoken]I will dedicate myself to protecting the meek, just like the Avatar did!"]
+        },
+        {
             "id": "inspire_adventurer",
             "texts": ["[spoken]I wonder if the Holy Ring is still in the fields near Hanging Tree..."]
         },
@@ -61,6 +65,14 @@
         {
             "id": "go_to_smidge_ridge",
             "texts": ["[spoken]I will undertake the trials of Smidge Ridge just like the avatar!"]
+        },
+        {
+            "id": "hunt_goblins",
+            "texts": ["[spoken]I'll fight those dirty goblins in {townName}!!"]
+        },
+        {
+            "id": "fight_goblins",
+            "texts": ["[spoken]Take that and that you smelly fiends!"]
         },
         {
             "id": "bard_return",
