@@ -91,6 +91,7 @@ public class GameState : MonoBehaviour {
             template.title = templateJson["title"].str;
             template.portraitId = templateJson["portraitId"].str;
             template.type = (Unit.Type) Unit.Type.Parse(typeof(Unit.Type), templateJson["type"].str);
+            template.speed = templateJson["speed"].f;
             if (templateJson["initial_town"] != null) {
                 template.initialTown = templateJson["initial_town"].str;
             }
@@ -250,6 +251,7 @@ public class GameState : MonoBehaviour {
         state.type = template.type;
         state.name = template.name;
         state.title = template.title;
+        state.speed = template.speed;
         state.portraitId = template.portraitId;
         return state;
     }
@@ -277,6 +279,7 @@ public class GameState : MonoBehaviour {
         public string portraitId;
         public Unit.Type type;
         public Unit.Mode mode;
+        public float speed;
 
         public Vector3 position;
         public string targetTown;
@@ -303,6 +306,7 @@ public class GameState : MonoBehaviour {
         public string portraitId;
         public Unit.Type type;
         public string initialTown;
+        public float speed;
     }
 
     public class DialogTemplate {

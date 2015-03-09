@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Goblins : MonoBehaviour {
-    public const float RESPAWN_TIMER = 1.0f;
+    public const float RESPAWN_TIMER_MIN = 10.0f;
+    public const float RESPAWN_TIMER_MAX = 20.0f;
     
     public Town targetTown;
     public Town[] targetableTowns;
@@ -34,7 +35,7 @@ public class Goblins : MonoBehaviour {
     }
 
     private IEnumerator Respawn() {
-        float timer = Goblins.RESPAWN_TIMER;
+        float timer = Random.Range(Goblins.RESPAWN_TIMER_MIN, Goblins.RESPAWN_TIMER_MAX);
         do {
             if (!Dialog.InDialog()) {
                 timer -= Time.deltaTime;

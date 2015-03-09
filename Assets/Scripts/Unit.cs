@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Unit : MonoBehaviour {
     // Units / second
-    public static float MAX_SPEED = 5.0f;
+    public static float BASE_SPEED = 1.0f;
     public const float INTERACT_DISTANCE = 0.2f;
     public const float CAMERA_PAN_SPEED = 10.0f;
     public const float FADE_SPEED = 2.0f;
@@ -30,6 +30,7 @@ public class Unit : MonoBehaviour {
     public Town nextTown;
     public Town targetTown;
     public Town currentTown;
+    private float speed;
     public DialogBubble dialogBubble;
     private GameState.PersonState state;
     private Mode mode;
@@ -273,8 +274,8 @@ public class Unit : MonoBehaviour {
 
     public void MoveTowardsTown(Town town) {
         Vector3 delta = (town.transform.position + this.townOffset * 0.01f) - this.transform.position;
-        if (delta.magnitude > Time.deltaTime * Unit.MAX_SPEED) {
-            delta = delta.normalized * Time.deltaTime * Unit.MAX_SPEED;
+        if (delta.magnitude > Time.deltaTime * Unit.BASE_SPEED * this.speed) {
+            delta = delta.normalized * Time.deltaTime * Unit.BASE_SPEED * this.speed;
         }
         this.transform.position += delta;
     }
@@ -342,6 +343,7 @@ public class Unit : MonoBehaviour {
         this.state.type = this.type;
         this.state.heardStories = this.heardStories.ToArray();
         this.state.mode = this.mode;
+        this.state.speed = this.speed;
         print("Next Town: " + this.nextTown + " Target Town: " + this.targetTown);
         if (this.nextTown != null) {
             this.state.nextTown = this.nextTown.townId;
@@ -371,6 +373,7 @@ public class Unit : MonoBehaviour {
         this.id = state.id;
         this.type = state.type;
         this.mode = state.mode;
+        this.speed = state.speed;
         this.heardStories = new List<Story>(this.state.heardStories);
         if (this.state.nextTown != null) {
             this.nextTown = Town.GetTown(state.nextTown);

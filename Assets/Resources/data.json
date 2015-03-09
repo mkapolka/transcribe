@@ -110,7 +110,8 @@
             "title": "is exploring Smidge Ridge",
             "portraitId": "warrior",
             "type": "Soldier",
-            "initial_town": "smidge_ridge"
+            "initial_town": "smidge_ridge",
+            "speed": 0.5
         },
         {
             "id": "adventurer",
@@ -119,28 +120,32 @@
             "portraitId": "adventurer",
             "type": "Adventurer",
             "knows_stories": ["location_smidge_ridge"],
-            "initial_town": "gaffer"
+            "initial_town": "gaffer",
+            "speed": 1.0
         },
         {
             "id": "bard1",
             "name": "Moe",
             "title": "the bard",
             "portraitId": "bard",
-            "type": "Bard"
+            "type": "Bard",
+            "speed": 2.0
         },
         {
             "id": "bard2",
             "name": "Larry",
             "title": "the bard",
             "portraitId": "bard",
-            "type": "Bard"
+            "type": "Bard",
+            "speed": 2.0
         },
         {
             "id": "bard3",
             "name": "Curly",
             "title": "the bard",
             "portraitId": "bard",
-            "type": "Bard"
+            "type": "Bard",
+            "speed": 2.0
         }
     ],
     "towns": [
