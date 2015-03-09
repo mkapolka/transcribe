@@ -13,7 +13,7 @@ public class Town : MonoBehaviour {
 
     public bool innatelyDangerous;
     [System.NonSerialized]
-    public bool hasGoblins;
+    private bool hasGoblins;
 
     public static Town GetTown(string townId) {
         Town[] towns = GameObject.FindObjectsOfType(typeof(Town)) as Town[];
@@ -41,6 +41,20 @@ public class Town : MonoBehaviour {
 
     public bool IsDangerous() {
         return this.innatelyDangerous || this.hasGoblins;
+    }
+
+    public void SetHasGoblins(bool val) {
+        this.hasGoblins = val;
+        if (val) {
+            Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
+            foreach (Unit unit in units) {
+                if (unit.currentTown == this || unit.nextTown == this && !(unit.mode == Unit.Mode.SoldierDefend)) {
+                    unit.ShowDialog("flee_goblins");
+                    Town rTown = this.GetNearestBardableTown();
+                    unit.SetTargetTown(rTown);
+                }
+            }
+        }
     }
 
     public void MouseUp() {
@@ -112,6 +126,34 @@ public class Town : MonoBehaviour {
         unit.LoadState(state);
         unit.ArriveAtTown(this);
         return unit;
+    }
+
+    /* Returns all the towns connected to this one in order of their distance from this town */
+    private Town[] GetDistanceOrderedTowns() {
+        List<Town> orderedTowns = new List<Town>();
+        Queue<Town> remainingTowns = new Queue<Town>();
+        remainingTowns.Enqueue(this);
+        Town nextTown;
+        do {
+            nextTown = remainingTowns.Dequeue();
+            orderedTowns.Add(nextTown);
+            foreach (Town town in nextTown.connected) {
+                if (!orderedTowns.Contains(town)) {
+                    remainingTowns.Enqueue(town);
+                }
+            }
+        } while (remainingTowns.Count > 0);
+        return orderedTowns.ToArray();
+    }
+
+    public Town GetNearestBardableTown() {
+        Town[] towns = this.GetDistanceOrderedTowns();
+        foreach (Town town in towns) {
+            if (town.canSendBards && !town.IsDangerous()) {
+                return town;
+            }
+        }
+        return null;
     }
 
     /*

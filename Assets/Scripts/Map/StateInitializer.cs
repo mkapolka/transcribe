@@ -32,5 +32,9 @@ public class StateInitializer : MonoBehaviour {
                 unit.ArriveAtTown(unit.currentTown);
             }
         }
+
+        //Initialize Goblins
+        Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
+        goblins.Initialize();
 	}
 }

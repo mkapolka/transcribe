@@ -33,7 +33,7 @@ public class Unit : MonoBehaviour {
     private float speed;
     public DialogBubble dialogBubble;
     private GameState.PersonState state;
-    private Mode mode;
+    public Mode mode;
     public List<Story> heardStories = new List<Story>();
 
     // Move them a little off the center of the town for sprite overlapping purposes
@@ -173,8 +173,7 @@ public class Unit : MonoBehaviour {
         //TODO refactor
         if (this.mode == Mode.SoldierDefend) {
             Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
-            print(goblins + " " + goblins.targetTown + " " + town);
-            if (goblins.targetTown == town) {
+            if (goblins.targetTown == town && !goblins.AreKilled()) {
                 goblins.Kill();
                 this.ShowDialog("fight_goblins");
             }
@@ -264,7 +263,7 @@ public class Unit : MonoBehaviour {
         this.SetTargetTown(targetTown);
     }
 
-    protected void SetTargetTown(Town town) {
+    public void SetTargetTown(Town town) {
         this.currentTown = this.GetNearestTown();
         this.targetTown = town;
         if (town != null) {
@@ -294,7 +293,7 @@ public class Unit : MonoBehaviour {
         }
 
         if (GameState.HasSeenDialog(dialogId)) {
-            this.dialogBubble.SetDialogId(dialogId);
+            this.dialogBubble.SetDialogId(dialogId, parameters);
         } else {
             GameState.SeeDialog(dialogId);
             Camera.main.GetComponent<CameraFocuser>().EnqueueEvent(this.transform, dialogId, parameters);

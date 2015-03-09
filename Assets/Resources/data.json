@@ -101,6 +101,10 @@
                 "[portrait {speakerId}]Okay.",
                 "[portrait boss]You learn {storyName} from {speakerName}."
             ]
+        },
+        {
+            "id": "flee_goblins",
+            "texts": ["[spoken]Aaaah! Goblins! I'm getting out of here."]
         }
     ],
     "people": [
@@ -111,7 +115,7 @@
             "portraitId": "warrior",
             "type": "Soldier",
             "initial_town": "smidge_ridge",
-            "speed": 0.5
+            "speed": 1.0
         },
         {
             "id": "adventurer",
@@ -121,7 +125,7 @@
             "type": "Adventurer",
             "knows_stories": ["location_smidge_ridge"],
             "initial_town": "gaffer",
-            "speed": 1.0
+            "speed": 1.3
         },
         {
             "id": "bard1",

@@ -17,7 +17,10 @@ public class Goblins : MonoBehaviour {
     }
 
     public void Initialize() {
-        this.SetTargetTown(Town.GetTown(GameState.goblinTargetTown));
+        if (GameState.goblinTargetTown != null && !GameState.goblinsKilled) {
+            this.SetTargetTown(Town.GetTown(GameState.goblinTargetTown));
+        }
+        this.killed = GameState.goblinsKilled;
     }
 
     public void Cleanup() {
@@ -25,7 +28,7 @@ public class Goblins : MonoBehaviour {
         GameState.goblinsKilled = this.killed;
     }
 
-    private void SetKilled(bool killed) {
+    public void SetKilled(bool killed) {
         this.killed = killed;
         this.GetComponent<Animator>().SetBool("killed", killed);
     }
@@ -42,18 +45,21 @@ public class Goblins : MonoBehaviour {
             }
             yield return null;
         } while (timer > 0);
-
-        List<Town> availableTowns = new List<Town>(this.targetableTowns);
-        availableTowns.Remove(this.targetTown);
-        Town nextTown = availableTowns[Random.Range(0, availableTowns.Count)];
+        Town nextTown = this.PickTown();
         print("Placing goblins at: " + nextTown.townName);
         this.SetTargetTown(nextTown);
         this.SetKilled(false);
     }
 
+    public Town PickTown() {
+        List<Town> availableTowns = new List<Town>(this.targetableTowns);
+        availableTowns.Remove(this.targetTown);
+        return availableTowns[Random.Range(0, availableTowns.Count)];
+    }
+
     public void Kill() {
         if (!this.killed) {
-            this.targetTown.hasGoblins = false;
+            this.targetTown.SetHasGoblins(false);
             //GameObject.Destroy(this.gameObject);
             this.SetKilled(true);
             this.StartCoroutine(Respawn());
@@ -62,11 +68,11 @@ public class Goblins : MonoBehaviour {
 
     public void SetTargetTown(Town town) {
         if (this.targetTown != null) {
-            this.targetTown.hasGoblins = false;
+            this.targetTown.SetHasGoblins(false);
         }
 
         this.targetTown = town;
         this.transform.position = town.transform.position;
-        town.hasGoblins = true;
+        town.SetHasGoblins(true);
     }
 }

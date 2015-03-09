@@ -27,11 +27,17 @@ public class GameState : MonoBehaviour {
     }
 
     public static void LoadScene(string sceneName) {
+        GameState.Cleanup();
+        Application.LoadLevel(sceneName);
+    }
+
+    public static void Cleanup() {
         Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
         foreach (Unit unit in units) {
             unit.CleanUp();
         }
-        Application.LoadLevel(sceneName);
+        Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
+        goblins.Cleanup();
     }
 
     public static void InitializeState() {
