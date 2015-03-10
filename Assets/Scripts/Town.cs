@@ -49,9 +49,7 @@ public class Town : MonoBehaviour {
             Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
             foreach (Unit unit in units) {
                 if (unit.currentTown == this || unit.nextTown == this && !(unit.mode == Unit.Mode.SoldierDefend)) {
-                    unit.ShowDialog("flee_goblins");
-                    Town rTown = this.GetNearestBardableTown();
-                    unit.SetTargetTown(rTown);
+                    unit.BeScaredByGoblins(this);
                 }
             }
         }
@@ -124,7 +122,7 @@ public class Town : MonoBehaviour {
         GameState.PersonState state = GameState.InstantiatePersonFromTemplate(template, id);
         state.position = this.transform.position;
         unit.LoadState(state);
-        unit.ArriveAtTown(this);
+        unit.ArriveAtTown(this, true);
         return unit;
     }
 

@@ -29,7 +29,7 @@ public class StateInitializer : MonoBehaviour {
 
         foreach (Unit unit in units) {
             if (unit.currentTown != null) {
-                unit.ArriveAtTown(unit.currentTown);
+                //unit.ArriveAtTown(unit.currentTown);
             }
         }
 

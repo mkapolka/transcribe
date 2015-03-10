@@ -105,17 +105,17 @@ public class Unit : MonoBehaviour {
             }
             if (this.targetTown != null) {
                 if (this.nextTown != this.targetTown && this.IsAtTown(this.nextTown)) {
-                    this.ArriveAtTown(this.nextTown);
+                    this.ArriveAtTown(this.nextTown, false);
                     this.nextTown = this.nextTown.GetNextTown(this.targetTown);
                 } else {
                     this.MoveTowardsTown(this.nextTown);
                 }
 
                 if (this.IsAtTown(this.targetTown)) {
-                    this.currentTown = this.nextTown;
-                    this.ArriveAtTown(this.currentTown);
+                    this.currentTown = this.targetTown;
                     this.targetTown = null;
                     this.nextTown = null;
+                    this.ArriveAtTown(this.currentTown, true);
                 }
             }
         }
@@ -134,8 +134,8 @@ public class Unit : MonoBehaviour {
         }
     }
 
-    public void ArriveAtTown(Town town) {
-        if (this.type == Type.Bard && town == this.targetTown) {
+    public void ArriveAtTown(Town town, bool isDestination) {
+        if (this.type == Type.Bard && isDestination) {
             if (town.townId == "mission") {
                 StartCoroutine("FadeOut");
                 print("Available bards: " + string.Join(", ", GameState.availableBards.ToArray()));
@@ -171,13 +171,22 @@ public class Unit : MonoBehaviour {
         }
 
         //TODO refactor
-        if (this.mode == Mode.SoldierDefend) {
-            Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
-            if (goblins.targetTown == town && !goblins.AreKilled()) {
+        Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
+        if (goblins.targetTown == town && !goblins.AreKilled()) {
+            if (this.mode == Mode.SoldierDefend) {
                 goblins.Kill();
                 this.ShowDialog("fight_goblins");
+            } else {
+                this.BeScaredByGoblins(town);
             }
         }
+    }
+
+    public void BeScaredByGoblins(Town atTown) {
+        this.ShowDialog("flee_goblins");
+        Town rTown = atTown.GetNearestBardableTown();
+        print(rTown);
+        this.SetTargetTown(rTown);
     }
 
     IEnumerator FadeOut() {
@@ -384,6 +393,11 @@ public class Unit : MonoBehaviour {
         }
 
         this.GetComponentInChildren<SpriteRenderer>().sprite = this.GetSprite(this.type);
+
+        //For bard fadeout
+        if (this.type == Type.Bard && this.currentTown == this.targetTown && this.currentTown.townId == "mission") {
+            StartCoroutine(FadeOut());
+        }
     }
 
     private PersonInfoBox FindPersonInfoBox() {

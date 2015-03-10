@@ -20,7 +20,13 @@ public class Goblins : MonoBehaviour {
         if (GameState.goblinTargetTown != null && !GameState.goblinsKilled) {
             this.SetTargetTown(Town.GetTown(GameState.goblinTargetTown));
         }
-        this.killed = GameState.goblinsKilled;
+        this.SetKilled(GameState.goblinsKilled);
+        if (this.killed) {
+            StartCoroutine(Respawn());
+            this.GetComponent<Animator>().Play("GoblinDead");
+        } else {
+            this.GetComponent<Animator>().Play("GoblinIdle");
+        }
     }
 
     public void Cleanup() {
