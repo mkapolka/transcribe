@@ -35,6 +35,7 @@ public class Unit : MonoBehaviour {
     private GameState.PersonState state;
     public Mode mode;
     public List<Story> heardStories = new List<Story>();
+    public SpriteRenderer mainSprite;
 
     // Move them a little off the center of the town for sprite overlapping purposes
     private Vector3 townOffset;
@@ -108,10 +109,13 @@ public class Unit : MonoBehaviour {
                     this.ArriveAtTown(this.nextTown, false);
                     this.nextTown = this.nextTown.GetNextTown(this.targetTown);
                 } else {
+                    this.GetComponent<Animator>().SetBool("Walking", true);
                     this.MoveTowardsTown(this.nextTown);
                 }
 
                 if (this.IsAtTown(this.targetTown)) {
+                    this.GetComponent<Animator>().SetBool("Walking", false);
+                    this.MoveTowardsTown(this.nextTown);
                     this.currentTown = this.targetTown;
                     this.targetTown = null;
                     this.nextTown = null;
@@ -176,6 +180,7 @@ public class Unit : MonoBehaviour {
             if (this.mode == Mode.SoldierDefend) {
                 goblins.Kill();
                 this.ShowDialog("fight_goblins");
+                this.GetComponent<Animator>().SetTrigger("WarriorFight");
             } else {
                 this.BeScaredByGoblins(town);
             }
@@ -190,7 +195,7 @@ public class Unit : MonoBehaviour {
     }
 
     IEnumerator FadeOut() {
-        SpriteRenderer renderer = this.GetComponentInChildren<SpriteRenderer>();
+        SpriteRenderer renderer = this.mainSprite;
         while (renderer.material.color.a > 0) {
             Color color = renderer.material.color;
             color.a -= Time.deltaTime * FADE_SPEED;
@@ -324,6 +329,7 @@ public class Unit : MonoBehaviour {
         if (otherUnit != null && otherUnit.type == Type.Bard && this.type != Type.Bard) {
             float distance = (this.transform.position - other.transform.position).magnitude;
             if (distance < INTERACT_DISTANCE) {
+                otherUnit.GetComponent<Animator>().SetTrigger("BardSing");
                 foreach (Story story in otherUnit.heardStories) {
                     this.HearStory(story);
                 }
@@ -342,6 +348,16 @@ public class Unit : MonoBehaviour {
         // print("On destroy: " + this.state.id + " isKilled: " + this.isKilled);
         if (!this.isKilled) {
             this.StoreState();
+        }
+    }
+
+    private void InitializeAnimations() {
+        Animator animator = this.GetComponent<Animator>();
+        if (this.type == Type.Bard) {
+            if (this.targetTown == null && this.GetNearestTown().townId != "mission") {
+                animator.Play("BardDance");
+            }
+            animator.SetBool("IsBard", true);
         }
     }
 
@@ -392,12 +408,13 @@ public class Unit : MonoBehaviour {
             this.currentTown = this.GetNearestTown();
         }
 
-        this.GetComponentInChildren<SpriteRenderer>().sprite = this.GetSprite(this.type);
+        this.mainSprite.sprite = this.GetSprite(this.type);
 
         //For bard fadeout
         if (this.type == Type.Bard && this.currentTown == this.targetTown && this.currentTown.townId == "mission") {
             StartCoroutine(FadeOut());
         }
+        this.InitializeAnimations();
     }
 
     private PersonInfoBox FindPersonInfoBox() {

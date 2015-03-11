@@ -63,7 +63,7 @@ public class Town : MonoBehaviour {
                 bool bardGoingToTown = false;
                 Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
                 foreach (Unit unit in units) {
-                    if (unit.type == Unit.Type.Bard && unit.targetTown == this) {
+                    if (unit.type == Unit.Type.Bard && (unit.currentTown == this || unit.targetTown == this)) {
                         bardGoingToTown = true;
                     }
                 }
