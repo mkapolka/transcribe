@@ -19,6 +19,7 @@ public class GameState : MonoBehaviour {
     public static bool goblinsKilled = false;
     public static bool hasSpawnedWarrior = false;
     public static bool hasSpawnedAdventurer = false;
+    public static RingState ringState;
 
     public static TownState targetTown;
 
@@ -50,6 +51,7 @@ public class GameState : MonoBehaviour {
             GameState.InitializePersonTemplates(dataJson);
             GameState.InitializeDialogTemplates(dataJson);
             GameState.InitializePeople(GameState.personTemplates);
+            GameState.InitializeRing(dataJson);
 
             GameState.isInitialized = true;
         }
@@ -130,6 +132,12 @@ public class GameState : MonoBehaviour {
                 GameState.StorePerson(person);
             }
         }
+    }
+
+    public static void InitializeRing(JSONObject data) {
+        GameState.ringState = new RingState();
+        GameState.ringState.locationType = RingState.LocationType.Town;
+        GameState.ringState.location = "hanging_tree";
     }
 
     public static DialogTemplate GetDialogTemplate(string dialogId) {
@@ -318,5 +326,13 @@ public class GameState : MonoBehaviour {
     public class DialogTemplate {
         public string id;
         public string[] lines;
+    }
+
+    public class RingState {
+        public enum LocationType {
+            Person, Town
+        };
+        public LocationType locationType;
+        public string location;
     }
 }

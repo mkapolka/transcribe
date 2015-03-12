@@ -3,6 +3,7 @@ guid: 9913021f9aab34ca58621ad5e84b6fd6
 TextureImporter:
   fileIDToRecycleName:
     21300000: music_note
+    21300002: holy_ring
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -51,6 +52,16 @@ TextureImporter:
         y: 915
         width: 40
         height: 50
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: holy_ring
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 965
+        width: 51
+        height: 51
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

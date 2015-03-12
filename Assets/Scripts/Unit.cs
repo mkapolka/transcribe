@@ -36,6 +36,7 @@ public class Unit : MonoBehaviour {
     public Mode mode;
     public List<Story> heardStories = new List<Story>();
     public SpriteRenderer mainSprite;
+    public Animator animator;
 
     // Move them a little off the center of the town for sprite overlapping purposes
     private Vector3 townOffset;
@@ -51,6 +52,16 @@ public class Unit : MonoBehaviour {
             this.state.id = Random.Range(0, int.MaxValue).ToString();
             this.currentTown = this.GetNearestTown();
         }
+    }
+
+    public static Unit GetUnit(string personId) {
+        Unit[] units = GameObject.FindObjectsOfType(typeof(Unit)) as Unit[];
+        foreach (Unit unit in units) {
+            if (unit.id == personId) {
+                return unit;
+            }
+        }
+        return null;
     }
 
     public string GetName() {
@@ -78,6 +89,7 @@ public class Unit : MonoBehaviour {
     void Kill() {
         this.isKilled = true;
         GameObject.Destroy(this.gameObject);
+        this.MouseExit();
     }
 
     public void SetId(string id) {
@@ -109,12 +121,12 @@ public class Unit : MonoBehaviour {
                     this.ArriveAtTown(this.nextTown, false);
                     this.nextTown = this.nextTown.GetNextTown(this.targetTown);
                 } else {
-                    this.GetComponent<Animator>().SetBool("Walking", true);
+                    this.animator.SetBool("Walking", true);
                     this.MoveTowardsTown(this.nextTown);
                 }
 
                 if (this.IsAtTown(this.targetTown)) {
-                    this.GetComponent<Animator>().SetBool("Walking", false);
+                    this.animator.SetBool("Walking", false);
                     this.MoveTowardsTown(this.nextTown);
                     this.currentTown = this.targetTown;
                     this.targetTown = null;
@@ -180,7 +192,7 @@ public class Unit : MonoBehaviour {
             if (this.mode == Mode.SoldierDefend) {
                 goblins.Kill();
                 this.ShowDialog("fight_goblins");
-                this.GetComponent<Animator>().SetTrigger("WarriorFight");
+                this.animator.SetTrigger("WarriorFight");
             } else {
                 this.BeScaredByGoblins(town);
             }
@@ -329,7 +341,7 @@ public class Unit : MonoBehaviour {
         if (otherUnit != null && otherUnit.type == Type.Bard && this.type != Type.Bard) {
             float distance = (this.transform.position - other.transform.position).magnitude;
             if (distance < INTERACT_DISTANCE) {
-                otherUnit.GetComponent<Animator>().SetTrigger("BardSing");
+                otherUnit.animator.SetTrigger("BardSing");
                 foreach (Story story in otherUnit.heardStories) {
                     this.HearStory(story);
                 }
@@ -345,17 +357,15 @@ public class Unit : MonoBehaviour {
     }
 
     public void CleanUp() {
-        // print("On destroy: " + this.state.id + " isKilled: " + this.isKilled);
         if (!this.isKilled) {
             this.StoreState();
         }
     }
 
     private void InitializeAnimations() {
-        Animator animator = this.GetComponent<Animator>();
         if (this.type == Type.Bard) {
             if (this.targetTown == null && this.GetNearestTown().townId != "mission") {
-                animator.Play("BardDance");
+                this.animator.Play("BardDance");
             }
             animator.SetBool("IsBard", true);
         }

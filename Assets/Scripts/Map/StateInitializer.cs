@@ -36,5 +36,21 @@ public class StateInitializer : MonoBehaviour {
         //Initialize Goblins
         Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
         goblins.Initialize();
+
+        //Initialize ring
+        Ring ring = GameObject.FindObjectOfType(typeof(Ring)) as Ring;
+        switch (GameState.ringState.locationType) {
+            case GameState.RingState.LocationType.Town:
+                Town town = Town.GetTown(GameState.ringState.location);
+                ring.transform.position = town.transform.position;
+                ring.PlaceInTown(town);
+            break;
+
+            case GameState.RingState.LocationType.Person:
+                Unit unit = Unit.GetUnit(GameState.ringState.location);
+                ring.transform.position = unit.transform.position;
+                ring.GiveToPerson(unit);
+            break;
+        }
 	}
 }
