@@ -10,6 +10,7 @@ TextureImporter:
     21300010: bard
     21300012: adventurer
     21300014: goblin
+    21300016: fairy_queen
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -88,6 +89,16 @@ TextureImporter:
         y: 143
         width: 381
         height: 347
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: fairy_queen
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 116
+        width: 240
+        height: 368
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}

@@ -3,6 +3,8 @@ using System.Collections;
 
 public class DebugKeybindings : MonoBehaviour {
 
+    public static float unitBaseSpeed;
+
 	void Update () {
 	    if (Input.GetKeyDown("g")) {
             print("Moving goblins");
@@ -10,6 +12,17 @@ public class DebugKeybindings : MonoBehaviour {
             Town town = goblins.PickTown();
             goblins.SetTargetTown(town);
             goblins.SetKilled(false);
+        }
+
+        if (Input.GetKeyDown("s")) {
+            print("Pronto!");
+            DebugKeybindings.unitBaseSpeed = Unit.BASE_SPEED;
+            Unit.BASE_SPEED *= 3.0f;
+        }
+
+        if (Input.GetKeyUp("s")) {
+            print("Langsamer!");
+            Unit.BASE_SPEED = DebugKeybindings.unitBaseSpeed;
         }
 	}
 }

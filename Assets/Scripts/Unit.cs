@@ -10,11 +10,11 @@ public class Unit : MonoBehaviour {
     public const float FADE_SPEED = 2.0f;
 
 	public enum Type {
-        Bard, Soldier, Merchant, Wolf, Adventurer
+        Bard, Soldier, Merchant, Wolf, Adventurer, FairyQueen
     }
 
     public enum Mode {
-        Default, SoldierDefend
+        Default, SoldierDefend, AdventurerRing
     }
 
     [System.Serializable]
@@ -111,11 +111,17 @@ public class Unit : MonoBehaviour {
 
     public void Update() {
         if (!Dialog.InDialog()) {
+            //TODO Refactor
             switch (this.mode) {
                 case Mode.SoldierDefend:
                     this.UpdateSoldierDefend();
                 break;
+
+                case Mode.AdventurerRing:
+                    this.UpdateAdventurerRing();
+                break;
             }
+
             if (this.targetTown != null) {
                 if (this.nextTown != this.targetTown && this.IsAtTown(this.nextTown)) {
                     this.ArriveAtTown(this.nextTown, false);
@@ -147,6 +153,12 @@ public class Unit : MonoBehaviour {
                 this.SetTargetTown(town);
                 this.ShowDialog("hunt_goblins", parameters);
             }
+        }
+    }
+
+    private void UpdateAdventurerRing() {
+        if (this.targetTown == null && !Ring.BelongsTo(this) && Ring.IsAtATown()) {
+            this.SetTargetTown(Ring.GetCurrentTown());
         }
     }
 
@@ -197,6 +209,14 @@ public class Unit : MonoBehaviour {
                 this.BeScaredByGoblins(town);
             }
         }
+
+        if (this.mode == Mode.AdventurerRing) {
+            if (Ring.IsAtTown(town)) {
+                Ring ring = GameObject.FindObjectOfType(typeof(Ring)) as Ring;
+                this.ShowDialog("find_ring");
+                ring.GiveToPerson(this);
+            }
+        }
     }
 
     public void BeScaredByGoblins(Town atTown) {
@@ -204,6 +224,10 @@ public class Unit : MonoBehaviour {
         Town rTown = atTown.GetNearestBardableTown();
         print(rTown);
         this.SetTargetTown(rTown);
+
+        if (this.mode == Mode.AdventurerRing) {
+            this.SetMode(Mode.Default);
+        }
     }
 
     IEnumerator FadeOut() {
@@ -242,14 +266,14 @@ public class Unit : MonoBehaviour {
 
         // Some stories can happen as many times as we want
         switch (story.id) {
-            case "location_hanging_tree":
+            /*case "location_hanging_tree":
                 this.HearTownStory("hanging_tree");
             break;
 
             case "location_smidge_ridge":
             case "class_warrior":
                 this.HearTownStory("smidge_ridge");
-            break;
+            break;*/
         }
 
         //Type specific hear stories (TODO refactor this)
@@ -257,13 +281,27 @@ public class Unit : MonoBehaviour {
             case Type.Soldier:
                 this.HearStorySoldier(story);
             break;
+
+            case Type.Adventurer:
+                this.HearStoryAdventurer(story);
+            break;
         }
     }
 
     private void HearStorySoldier(Story story) {
         switch (story.id) {
             case "defend_gaffer":
+                this.ShowDialog("inspire_defend");
                 this.SetMode(Mode.SoldierDefend);
+            break;
+        }
+    }
+
+    private void HearStoryAdventurer(Story story) {
+        switch (story.id) {
+            case "location_hanging_tree":
+                this.ShowDialog("go_to_hanging_tree");
+                this.SetMode(Mode.AdventurerRing);
             break;
         }
     }

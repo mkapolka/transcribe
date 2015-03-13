@@ -67,6 +67,10 @@
             "texts": ["[spoken]I will undertake the trials of Smidge Ridge just like the avatar!"]
         },
         {
+            "id": "find_ring",
+            "texts": ["[spoken]I found the holy ring! It was under the sofa."]
+        },
+        {
             "id": "hunt_goblins",
             "texts": ["[spoken]I'll fight those dirty goblins in {townName}!!"]
         },
@@ -128,6 +132,15 @@
             "speed": 1.3
         },
         {
+            "id": "queen",
+            "name": "The Fairy Queen",
+            "title": "is chilling",
+            "portraitId": "fairy_queen",
+            "type": "FairyQueen",
+            "initial_town": "fairy_castle",
+            "speed": 1.0,
+        },
+        {
             "id": "bard1",
             "name": "Moe",
             "title": "the bard",
@@ -168,6 +181,10 @@
         {
             "id": "mission",
             "name": "The Mission"
+        },
+        {
+            "id": "fairy_castle",
+            "name": "Fairy Castle"
         }
     ]
 }
