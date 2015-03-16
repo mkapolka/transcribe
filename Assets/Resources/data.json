@@ -9,11 +9,6 @@
             "description": "How the avatar met brave Talos while facing the trials of Smidge Ridge."
         },
         {
-            "id": "class_merchant",
-            "title": "Friend of Merchants",
-            "description": "How the merchant guild helped the Avatar in his quest."
-        },
-        {
             "id": "location_hanging_tree",
             "title": "The Lost Ring",
             "description": "In which the Avatar loses the holy ring near the Hanging Tree."
@@ -37,7 +32,6 @@
             "id": "action_destroy_book",
             "title": "The Fearful Book",
             "description": "How the Avatar destroyed an deceitful book and its treacherous author.",
-            "upon_hearing": "How fearsome! I will be vigilant to destroy any duplicitous books I find."
         },
         {
             "id": "action_create_party",
@@ -69,6 +63,14 @@
         {
             "id": "find_ring",
             "texts": ["[spoken]I found the holy ring! It was under the sofa."]
+        },
+        {
+            "id": "seek_queen",
+            "texts": ["[spoken]I'll go meet the fairy queen!"]
+        },
+        {
+            "id": "deliver_ring",
+            "texts": ["[portrait fairy_queen]Now I will fulfill my ancient promise and open the way to the east."]
         },
         {
             "id": "hunt_goblins",

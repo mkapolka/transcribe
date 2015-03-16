@@ -14,7 +14,7 @@ public class Unit : MonoBehaviour {
     }
 
     public enum Mode {
-        Default, SoldierDefend, AdventurerRing
+        Default, SoldierDefend, AdventurerRing, AdventurerDeliver
     }
 
     [System.Serializable]
@@ -120,6 +120,10 @@ public class Unit : MonoBehaviour {
                 case Mode.AdventurerRing:
                     this.UpdateAdventurerRing();
                 break;
+
+                case Mode.AdventurerDeliver:
+                    this.UpdateAdventurerDeliver();
+                break;
             }
 
             if (this.targetTown != null) {
@@ -159,6 +163,12 @@ public class Unit : MonoBehaviour {
     private void UpdateAdventurerRing() {
         if (this.targetTown == null && !Ring.BelongsTo(this) && Ring.IsAtATown()) {
             this.SetTargetTown(Ring.GetCurrentTown());
+        }
+    }
+
+    private void UpdateAdventurerDeliver() {
+        if (this.targetTown == null && this.currentTown.townId != "fairy_castle") {
+            this.SetTargetTown(Town.GetTown("fairy_castle"));
         }
     }
 
@@ -216,6 +226,13 @@ public class Unit : MonoBehaviour {
                 this.ShowDialog("find_ring");
                 ring.GiveToPerson(this);
             }
+        }
+
+        if (this.mode == Mode.AdventurerDeliver && Ring.BelongsTo(this) && town.townId == "fairy_castle") {
+            print(this.mode + " " + Ring.BelongsTo(this) + " " + town.townId + " " + GameState.ringState.location);
+            this.ShowDialog("deliver_ring");
+            Ring ring = GameObject.FindObjectOfType(typeof(Ring)) as Ring;
+            ring.GiveToPerson(Unit.GetUnit("fairy_queen"));
         }
     }
 
@@ -302,6 +319,11 @@ public class Unit : MonoBehaviour {
             case "location_hanging_tree":
                 this.ShowDialog("go_to_hanging_tree");
                 this.SetMode(Mode.AdventurerRing);
+            break;
+
+            case "defend_gaffer":
+                this.ShowDialog("seek_queen");
+                this.SetMode(Mode.AdventurerDeliver);
             break;
         }
     }
