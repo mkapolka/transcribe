@@ -24,5 +24,12 @@ public class DebugKeybindings : MonoBehaviour {
             print("Langsamer!");
             Unit.BASE_SPEED = DebugKeybindings.unitBaseSpeed;
         }
+
+        if (Input.GetKeyUp("r")) {
+            print("Ring");
+            Unit bearer = Unit.GetUnit("adventurer");
+            Ring ring = GameObject.FindObjectOfType(typeof(Ring)) as Ring;
+            ring.GiveToPerson(bearer);
+        }
 	}
 }

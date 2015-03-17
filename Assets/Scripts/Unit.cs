@@ -229,10 +229,11 @@ public class Unit : MonoBehaviour {
         }
 
         if (this.mode == Mode.AdventurerDeliver && Ring.BelongsTo(this) && town.townId == "fairy_castle") {
-            print(this.mode + " " + Ring.BelongsTo(this) + " " + town.townId + " " + GameState.ringState.location);
             this.ShowDialog("deliver_ring");
             Ring ring = GameObject.FindObjectOfType(typeof(Ring)) as Ring;
-            ring.GiveToPerson(Unit.GetUnit("fairy_queen"));
+            ring.GiveToPerson(Unit.GetUnit("queen"));
+            Door door = Town.GetTown("door_west") as Door;
+            door.SetOpen(true);
         }
     }
 

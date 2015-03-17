@@ -37,6 +37,10 @@ public class GameState : MonoBehaviour {
         foreach (Unit unit in units) {
             unit.CleanUp();
         }
+        Town[] towns = GameObject.FindObjectsOfType(typeof(Town)) as Town[];
+        foreach (Town town in towns) {
+            town.Cleanup();
+        }
         Goblins goblins = GameObject.FindObjectOfType(typeof(Goblins)) as Goblins;
         goblins.Cleanup();
     }
@@ -63,7 +67,6 @@ public class GameState : MonoBehaviour {
             TownState state = new TownState();
             state.id = townJson["id"].str;
             state.townName = townJson["name"].str;
-            state.book = new Book(new Story[0]);
             townStates.Add(state);
         }
         GameState.townStates = townStates.ToArray();
@@ -168,7 +171,10 @@ public class GameState : MonoBehaviour {
                 return state;
             }
         }
-        throw new System.Exception("Couldn't find TownState with townId " + townId);
+        //throw new System.Exception("Couldn't find TownState with townId " + townId);
+        TownState output = new TownState();
+        output.id = townId;
+        return output;
     }
 
     public static void SetTownState(TownState townState) {
@@ -283,7 +289,7 @@ public class GameState : MonoBehaviour {
 	public class TownState {
         public string id;
         public string townName;
-        public Book book;
+        public bool doorOpen = false;
     }
 
     public class PersonState {

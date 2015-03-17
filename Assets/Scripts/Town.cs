@@ -6,7 +6,6 @@ public class Town : MonoBehaviour {
     public string townName;
     public string townId;
 	public Town[] connected;
-    public Book book;
     public GameObject unitPrefab;
     public string[] folkSongs;
     public bool canSendBards;
@@ -14,6 +13,8 @@ public class Town : MonoBehaviour {
     public bool innatelyDangerous;
     [System.NonSerialized]
     private bool hasGoblins;
+
+    protected GameState.TownState state;
 
     public static Town GetTown(string townId) {
         Town[] towns = GameObject.FindObjectsOfType(typeof(Town)) as Town[];
@@ -27,10 +28,20 @@ public class Town : MonoBehaviour {
 
     public void Start() {}
 
-    public void InitializeState() {
+    virtual public void InitializeState() {
         GameState.TownState townState = GameState.GetTownState(this.townId);
         this.townName = townState.townName;
-        this.book = townState.book;
+        this.state = townState;
+    }
+
+    virtual public void StoreState() {
+        this.state.townName = this.townName;
+        this.state.id = this.townId;
+        GameState.SetTownState(this.state);
+    }
+
+    public void Cleanup() {
+        this.StoreState();
     }
 
     private Dictionary<string, string> GetDialogParameters() {
@@ -77,12 +88,6 @@ public class Town : MonoBehaviour {
                     GameState.LoadScene("Writing");
                 }
             }
-        }
-    }
-
-    void Update() {
-        if (this.book != null) {
-            this.ProcessStories(this.book.stories);
         }
     }
 
@@ -170,6 +175,9 @@ public class Town : MonoBehaviour {
             Town nextTown = remainingTowns.Pop();
             int nextDistance = townDistances[nextTown];
             foreach (Town town in nextTown.connected) {
+                if (town == null) {
+                    print(this + " " + targetTown);
+                }
                 if (!townDistances.ContainsKey(town)) {
                     townDistances.Add(town, nextDistance + 1);
                     remainingTowns.Push(town);
