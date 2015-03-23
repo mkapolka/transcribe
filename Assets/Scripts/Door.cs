@@ -7,7 +7,7 @@ public class Door : Town {
     public Door otherSide;
     public bool isOpen;
 
-    void Start() {
+    public void Start() {
         this.SyncConnectedList();
     }
 
@@ -26,7 +26,7 @@ public class Door : Town {
     }
 
     public void SetOpen(bool isOpen, bool callback = true) {
-        this.isOpen = true;
+        this.isOpen = isOpen;
         this.SyncConnectedList();
         if (callback) {
             this.otherSide.SetOpen(isOpen, false);

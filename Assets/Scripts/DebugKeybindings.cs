@@ -31,5 +31,11 @@ public class DebugKeybindings : MonoBehaviour {
             Ring ring = GameObject.FindObjectOfType(typeof(Ring)) as Ring;
             ring.GiveToPerson(bearer);
         }
+
+        if (Input.GetKeyUp("d")) {
+            Door door = GameObject.FindObjectOfType(typeof(Door)) as Door;
+            door.SetOpen(!door.isOpen);
+            print(door.isOpen ? "opening door" : "closing door");
+        }
 	}
 }

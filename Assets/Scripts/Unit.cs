@@ -9,12 +9,17 @@ public class Unit : MonoBehaviour {
     public const float CAMERA_PAN_SPEED = 10.0f;
     public const float FADE_SPEED = 2.0f;
 
+    public const string STORY_SOLDIER_DEFEND = "defend_gaffer";
+    public const string STORY_SOLDIER_DEMIURGE = "slay_demiurge";
+    public const string STORY_ADVENTURER_QUEEN = "defend_gaffer";
+    public const string STORY_ADVENTURER_RING = "location_hanging_tree";
+
 	public enum Type {
         Bard, Soldier, Merchant, Wolf, Adventurer, FairyQueen
     }
 
     public enum Mode {
-        Default, SoldierDefend, AdventurerRing, AdventurerDeliver
+        Default, SoldierDefend, SoldierDemiurge, AdventurerRing, AdventurerDeliver
     }
 
     [System.Serializable]
@@ -117,6 +122,10 @@ public class Unit : MonoBehaviour {
                     this.UpdateSoldierDefend();
                 break;
 
+                case Mode.SoldierDemiurge:
+                    this.UpdateSoldierDemiurge();
+                break;
+
                 case Mode.AdventurerRing:
                     this.UpdateAdventurerRing();
                 break;
@@ -155,8 +164,13 @@ public class Unit : MonoBehaviour {
                 Dictionary<string, string> parameters = this.GetDialogParameters();
                 parameters.Add("townName", town.townName);
                 this.SetTargetTown(town);
-                this.ShowDialog("hunt_goblins", parameters);
             }
+        }
+    }
+
+    private void UpdateSoldierDemiurge() {
+        if (this.targetTown == null && this.currentTown.townId != "demiurge") {
+            this.SetTargetTown(Town.GetTown("demiurge"));
         }
     }
 
@@ -213,7 +227,6 @@ public class Unit : MonoBehaviour {
         if (goblins.targetTown == town && !goblins.AreKilled()) {
             if (this.mode == Mode.SoldierDefend) {
                 goblins.Kill();
-                this.ShowDialog("fight_goblins");
                 this.animator.SetTrigger("WarriorFight");
             } else {
                 this.BeScaredByGoblins(town);
@@ -308,21 +321,26 @@ public class Unit : MonoBehaviour {
 
     private void HearStorySoldier(Story story) {
         switch (story.id) {
-            case "defend_gaffer":
+            case STORY_SOLDIER_DEFEND:
                 this.ShowDialog("inspire_defend");
                 this.SetMode(Mode.SoldierDefend);
+            break;
+
+            case STORY_SOLDIER_DEMIURGE:
+                this.ShowDialog("inspire_demiurge");
+                this.SetMode(Mode.SoldierDemiurge);
             break;
         }
     }
 
     private void HearStoryAdventurer(Story story) {
         switch (story.id) {
-            case "location_hanging_tree":
+            case STORY_ADVENTURER_RING:
                 this.ShowDialog("go_to_hanging_tree");
                 this.SetMode(Mode.AdventurerRing);
             break;
 
-            case "defend_gaffer":
+            case STORY_ADVENTURER_QUEEN:
                 this.ShowDialog("seek_queen");
                 this.SetMode(Mode.AdventurerDeliver);
             break;

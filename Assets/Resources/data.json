@@ -1,6 +1,6 @@
 {
     "known_stories": [
-        "location_hanging_tree", "defend_gaffer"
+        "location_hanging_tree", "defend_gaffer", "slay_demiurge"
     ],
     "stories": [
         {
@@ -11,7 +11,7 @@
         {
             "id": "location_hanging_tree",
             "title": "The Lost Ring",
-            "description": "In which the Avatar loses the holy ring near the Hanging Tree."
+            "description": "In which the Avatar loses the holy ring near the Hanging Tree.",
         },
         {
             "id": "location_smidge_ridge",
@@ -24,25 +24,69 @@
             "description": "How the Avatar defended the good people of Gaffer's Junction."
         },
         {
+            "id": "slay_demiurge",
+            "title": "The Avatar's Quest",
+            "description": "How the Avatar descended into the dark canyon and slew the Demiurge"
+        },
+        {
             "id": "ring_oath",
             "title": "Gilded Promise",
             "description": "Recounts how the Fairy Queen swore an oath on the holy ring."
         },
         {
-            "id": "action_destroy_book",
-            "title": "The Fearful Book",
-            "description": "How the Avatar destroyed an deceitful book and its treacherous author.",
+            "id": "beast",
+            "title": "The Fel Beast",
+            "description": "",
+            "lines": [
+                "Woe to those who the Avatar disdains",
+                "Like the horned beast, slain by his hand",
+                "Whose horn was pillaged and turned into the",
+                "Ivory lute"
+            ]
+        }
+        {
+            "id": "final_battle",
+            "title": "Fall of the Avatar",
+            "description": "",
+            "lines": [
+                "Down the avatar descended",
+                "into the secret passages of the blind canyon",
+                "to unravel the mysteries of the demiurge",
+                "and in doing so slay him"
+            ]
         },
         {
-            "id": "action_create_party",
-            "title": "Fellowship of the Avatar",
-            "description": "Recalls how the Avatar formed an adventuring party and ventured forth."
+            "id": "gaffers_junction",
+            "title": "Battle for Gaffer's Junction"
+            "description": "",
+            "lines": [
+                "Ur knows the story well,",
+                "how the Avatar fought bravely at Gaffer's Juction",
+                "nurtured by the pungent uncture",
+                "whose recipe is lost to time"
+            ]
+        },
+        {
+            "id": "ring_saga",
+            "title": "The Ring Saga",
+            "description": "it's the ring saga duder",
+            "lines": [
+                "Only Edzu knows where the holy ring lies",
+                "symbol of the seal and bond with the fairy queen",
+                "among the fields of Hanging Tree",
+                "where the Avatar in his peaceful old age",
+                "repaired the damage wrought by the Demiurge",
+            ]
         }
     ],
     "dialogs": [
         {
             "id": "inspire_soldier",
             "texts": ["[spoken]The bard's tales have inspired me! I want to be just like Talos the soldier!"]
+        },
+        {
+            "id": "inspire_demiurge",
+            "texts": ["[spoken]I will go and kill the demiurge's returned form"]
         },
         {
             "id": "inspire_defend",
@@ -71,14 +115,6 @@
         {
             "id": "deliver_ring",
             "texts": ["[portrait fairy_queen]Now I will fulfill my ancient promise and open the way to the east."]
-        },
-        {
-            "id": "hunt_goblins",
-            "texts": ["[spoken]I'll fight those dirty goblins in {townName}!!"]
-        },
-        {
-            "id": "fight_goblins",
-            "texts": ["[spoken]Take that and that you smelly fiends!"]
         },
         {
             "id": "bard_return",

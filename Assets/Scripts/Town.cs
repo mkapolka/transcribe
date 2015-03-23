@@ -26,8 +26,6 @@ public class Town : MonoBehaviour {
         return null;
     }
 
-    public void Start() {}
-
     virtual public void InitializeState() {
         GameState.TownState townState = GameState.GetTownState(this.townId);
         this.townName = townState.townName;
